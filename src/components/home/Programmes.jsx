@@ -44,7 +44,7 @@ function Programmes() {
 
                   <div className="overflow-hidden h-75">
                     <img
-                      src="/src/assets/ug.jpg"
+                      src="/images/ug.jpg"
                       alt="UG"
                       className="object-cover w-full h-full transition group-hover:scale-105"
                     />
@@ -67,7 +67,7 @@ function Programmes() {
 
                   <div className="overflow-hidden h-75">
                     <img
-                      src="/src/assets/pg.jpg"
+                      src="/images/pg.jpg"
                       alt="PG"
                       className="object-cover w-full h-full transition group-hover:scale-105"
                     />
@@ -90,7 +90,7 @@ function Programmes() {
 
                   <div className="overflow-hidden h-75">
                     <img
-                      src="/src/assets/phd.jpg"
+                      src="/images/phd.jpg"
                       alt="PhD"
                       className="object-cover w-full h-full transition group-hover:scale-105"
                     />

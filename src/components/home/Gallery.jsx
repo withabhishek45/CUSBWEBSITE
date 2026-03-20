@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 
 function Gallery() {
   const images = [
-    "/src/assets/2.jpg",
-    "/src/assets/5.jpeg",
-    "/src/assets/10_f.jpg",
+    "/images/2.jpg",
+    "/images/5.jpeg",
+    "/images/10_f.jpg",
   ];
 
   // ✅ Use ONLY video IDs (important)

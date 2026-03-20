@@ -3,7 +3,7 @@ function Stats() {
     <div
       className="py-1 text-white bg-center bg-cover"
       style={{
-        backgroundImage:"src/assets/central-university-of-south-bihar-campus.jpg",
+        backgroundImage:"/images/central-university-of-south-bihar-campus.jpg",
       }}
     >
       {/* Overlay */}

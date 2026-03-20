@@ -3,25 +3,25 @@ import { useEffect, useMemo, useState } from "react";
 const slides = [
   {
     id: 1,
-    src: "/src/assets/fd27.jpeg",
+    src: "/images/fd27.jpeg",
     title: "Welcome to Central University of South Bihar",
     subtitle: "Explore our campuses, programs and innovation",
   },
   {
     id: 2,
-    src: "/src/assets/interconf.jpg",
+    src: "/images/interconf.jpg",
     title: "A Legacy of Research",
     subtitle: "Our faculty and students drive discovery worldwide",
   },
   {
     id: 3,
-    src: "/src/assets/2.jpg",
+    src: "/images/2.jpg",
     title: "World Class Education",
     subtitle: "Join thousands of students pursuing excellence",
   },
   {
     id: 4,
-    src: "/src/assets/interconv.jpg",
+    src: "/images/interconv.jpg",
     title: "Innovation & Excellence",
     subtitle: "Building the future through research and education",
   },

@@ -35,7 +35,7 @@ function AboutSection() {
           {/* Card 1 */}
           <div className="p-4 text-center bg-white rounded shadow">
             <img
-              src="./src/assets/dm.jpg"
+              src="/images/dm.jpg"
               alt="President"
               className="object-cover w-full h-40 rounded"
             />
@@ -49,7 +49,7 @@ function AboutSection() {
           {/* Card 2 */}
           <div className="p-4 text-center bg-white rounded shadow">
             <img
-              src="./src/assets/cpthakur-final.jpg"
+              src="/images/cpthakur-final.jpg"
               alt="Chancellor"
               className="object-cover w-full h-40 rounded"
             />
@@ -63,7 +63,7 @@ function AboutSection() {
           {/* Card 3 */}
           <div className="p-4 text-center bg-white rounded shadow">
             <img
-              src="./src/assets/VC_sir2.jpg"
+              src="/images/VC_sir2.jpg"
               alt="VC"
               className="object-cover w-full h-40 rounded"
             />

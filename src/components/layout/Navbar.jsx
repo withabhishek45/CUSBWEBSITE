@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+ isimport { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -202,12 +202,12 @@ function Navbar() {
       <div className="flex items-center justify-between px-6 py-4 bg-white shadow">
 
         <NavLink to="/">
-          <img src="/src/assets/name-logo.png" className="ml-auto h-14 md:h-16" />
+          <img src="/images/name-logo.png" className="ml-auto h-14 md:h-16" />
         </NavLink>
 
         <div className="hidden gap-4 md:flex">
-          <img src="/src/assets/vikshit_bharat_f.jpg" className="h-19" />
-          <img src="/src/assets/naac2.png" className="mr-16 h-18" />
+          <img src="/images/vikshit_bharat_f.jpg" className="h-19" />
+          <img src="/images/naac2.png" className="mr-16 h-18" />
         </div>
       </div>
     </div>

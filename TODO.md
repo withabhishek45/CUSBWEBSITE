@@ -1,8 +1,9 @@
-# Deployment TODO
+# Site Deployment & Fixes TODO
 
-- [x] Test build: npm run build (dist/ ready)
-- [x] Update .gitignore for clean repo (ignore backups, env, etc.)
-- [ ] Create GitHub repo: https://github.com/new → "CUSB-Website" (public)
-- [ ] Set remote: git remote set-url origin https://github.com/YOUR_USERNAME/CUSB-Website.git
-- [ ] Commit/push: git add .; git commit -m "Initial site"; git push -u origin main
-- [ ] Deploy: vercel.com/new → Import repo → Live!
+- [x] Build test: npm run build ✅
+- [x] Optimize .gitignore ✅
+- [x] Push to GitHub https://github.com/withabhishek45/CUSBWEBSITE ✅
+- [x] Image fix: Move to public/images + update paths ✅ (in progress)
+- [ ] Deploy Vercel/Netlify: vercel.com/new → Import → Live!
+
+After fixes: cd university-website && git push → auto-redeploy.
