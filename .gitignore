@@ -7,18 +7,98 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# Editor directories and files
+# Coverage
+coverage/
+*.lcov
+.nyc_output
+
+# Dependency dirs
+node_modules/
+.npm
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+
+# ESLint cache
+.eslintcache
+
+# Microbundle
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# REPL history
+.node_repl_history
+
+# npm pack
+*.tgz
+
+# Yarn
+.yarn-integrity
+
+# dotenv
+.env
+.env.test
+.env*.local
+
+# Parcel
+.cache
+.parcel-cache
+
+# Next.js
+.next
+
+# Nuxt
+.nuxt
+
+# Vite
+dist
+
+# Storybook
+storybook-static
+
+# Sanity
+sanity/static
+
+# Commitlint
+commitlint.config.js*
+.commitlintrc*
+
+# TypeScript
+*.tsbuildinfo
+
+# Backups
+*.bak
+*.swp
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editors
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
+.project
+.classpath
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.swp

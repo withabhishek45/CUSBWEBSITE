@@ -1,39 +1,8 @@
-# i18next Internationalization TODO
+# Deployment TODO
 
-## ✅ 0. Created TODO.md & got plan approval
-
-## ✅ 1. Install dependencies
-cd university-website && npm install i18next react-i18next (executed)
-
-## ✅ 2. Create i18n.js
-Created university-website/src/i18n.js with config + comprehensive resources
-
-## ✅ 3. Update main.jsx
-Added import './i18n';
-
-## ✅ 4. Update Navbar.jsx
-Added useTranslation, replaced nav/search/login texts, updated lang buttons with changeLanguage + localStorage
-
-## [ ] 5. Update Footer.jsx
-Replace all strings with t()
-
-## ✅ 6. Update AboutSection.jsx
-Added useTranslation and replaced texts with t()
-
-## ✅ 7. Update key pages/components
-- ✅ Students.jsx
-- [ ] notices.jsx (data/notices.jsx component)
-- [ ] Visitors.jsx
-- [ ] Programmes.jsx
-- [ ] Announcements.jsx
-- [ ] Administration.jsx
-
-## [ ] 8. Update remaining pages
-Contact, Departments, Admission, News, etc.
-
-## [ ] 9. Test
-- npm run dev
-- Switch English <-> Hindi
-- Verify full site translation + localStorage persistence
-
-## [ ] 10. Final verification & cleanup
+- [x] Test build: npm run build (dist/ ready)
+- [x] Update .gitignore for clean repo (ignore backups, env, etc.)
+- [ ] Create GitHub repo: https://github.com/new → "CUSB-Website" (public)
+- [ ] Set remote: git remote set-url origin https://github.com/YOUR_USERNAME/CUSB-Website.git
+- [ ] Commit/push: git add .; git commit -m "Initial site"; git push -u origin main
+- [ ] Deploy: vercel.com/new → Import repo → Live!
