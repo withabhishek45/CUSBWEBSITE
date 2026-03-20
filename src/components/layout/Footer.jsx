@@ -6,6 +6,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
 
 function Footer() {
   const { t } = useTranslation();
@@ -51,7 +52,7 @@ function Footer() {
 
       {/* 🔴 DEPARTMENTS */}
       <div className="px-6 py-6 border-b border-gray-400">
-<h2 className="mb-4 text-lg font-bold">{t('footer.departments')}</h2>
+        <h2 className="mb-4 text-lg font-bold">{t('footer.departments')}</h2>
 
         <div className="grid grid-cols-2 gap-3 text-sm text-gray-200 md:grid-cols-3 lg:grid-cols-5">
           {departments.sort().map((dep, i) => (
@@ -67,7 +68,7 @@ function Footer() {
 
         {/* Left - Contact */}
         <div>
-<h2 className="mb-3 text-lg font-bold">
+          <h2 className="mb-3 text-lg font-bold">
             {t('footer.university')}
           </h2>
 
@@ -86,7 +87,7 @@ function Footer() {
 
         {/* Middle - Map */}
         <div>
-<h2 className="mb-3 text-lg font-bold">{t('footer.locateUs')}</h2>
+          <h2 className="mb-3 text-lg font-bold">{t('footer.locateUs')}</h2>
 
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3308.6846877892494!2d84.88686167497507!3d24.872126977921678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398d2ba5426f7dbf%3A0x3c4a04dfea5ac7fb!2sCentral%20University%20of%20South%20Bihar%20(Gaya)!5e1!3m2!1sen!2sin!4v1773949721037!5m2!1sen!2sin"
