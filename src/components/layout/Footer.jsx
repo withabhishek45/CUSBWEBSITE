@@ -4,132 +4,110 @@ import {
   FaLinkedin,
   FaTwitter,
   FaYoutube,
+  FaPhone,
+  FaEnvelope,
+  FaMapMarker,
 } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function Footer() {
-  const { t } = useTranslation();
-  const departments = [
-    "Agriculture",
-    "Bioinformatics",
-    "Biotechnology",
-    "Chemistry",
-    "Commerce & Business Studies",
-    "Computer Science",
-    "Economic Studies",
-    "English",
-    "Geography",
-    "Geology",
-    "Hindi",
-    "History",
-    "Law & Governance",
-    "Life Science",
-    "Mass Communication",
-    "Mathematics",
-    "Pharmacy",
-    "Physical Education",
-    "Physics",
-    "Political Studies & IR",
-    "Psychological Science",
-    "Sociological Studies",
-    "Statistics",
-    "Teacher Education",
-  ];
+const departments = [
+  "Agriculture", "Biotechnology", "Chemistry", "Commerce & Business Studies",
+  "Computer Science", "Economics", "English", "Hindi", "History",
+  "Law & Governance", "Mathematics", "Physics", "Political Studies & IR",
+  "Psychology", "Sociology", "Statistics", "Teacher Education",
+];
 
+const importantLinks = [
+  { label: "UGC", url: "https://www.ugc.gov.in" },
+  { label: "AICTE", url: "https://www.aicte-india.org" },
+  { label: "NCTE", url: "https://www.ncte.india.in" },
+  { label: "RTI", url: "#" },
+  { label: "Terms & Conditions", url: "#" },
+  { label: "Privacy Policy", url: "#" },
+];
+
+export default function Footer() {
   return (
-    <div className="mt-4 text-white bg-[#5b0f0f]">
-
-      {/* 🔴 TOP LINKS */}
-      <div className="flex flex-wrap justify-center gap-6 px-6 py-4 text-sm border-b border-gray-400">
-        <p className="cursor-pointer hover:text-yellow-300">{t('footer.students')}</p>
-        <p className="cursor-pointer hover:text-yellow-300">{t('footer.facultyStaff')}</p>
-        <p className="cursor-pointer hover:text-yellow-300">{t('footer.alumni')}</p>
-        <p className="cursor-pointer hover:text-yellow-300">{t('footer.industry')}</p>
-        <p className="cursor-pointer hover:text-yellow-300">{t('footer.directory')}</p>
-        <p className="cursor-pointer hover:text-yellow-300">{t('footer.contact')}</p>
-      </div>
-
-      {/* 🔴 DEPARTMENTS */}
-      <div className="px-6 py-6 border-b border-gray-400">
-        <h2 className="mb-4 text-lg font-bold">{t('footer.departments')}</h2>
-
-        <div className="grid grid-cols-2 gap-3 text-sm text-gray-200 md:grid-cols-3 lg:grid-cols-5">
-          {departments.sort().map((dep, i) => (
-            <p key={i} className="cursor-pointer hover:text-yellow-300">
-              {dep}
-            </p>
-          ))}
+    <footer className="bg-red-900 text-white">
+      {/* Quick Links Bar */}
+      <div className="bg-red-800 py-4">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm">
+            <Link to="/students" className="hover:text-yellow-300">Students</Link>
+            <Link to="/faculty-staff" className="hover:text-yellow-300">Faculty & Staff</Link>
+            <Link to="/research" className="hover:text-yellow-300">Research</Link>
+            <Link to="/download" className="hover:text-yellow-300">Downloads</Link>
+            <Link to="/contact" className="hover:text-yellow-300">Contact</Link>
+          </div>
         </div>
       </div>
 
-      {/* 🔴 MAIN SECTION */}
-      <div className="grid gap-8 p-8 md:grid-cols-3">
+      {/* Main Footer */}
+      <div className="max-w-7xl mx-auto px-4 py-10">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {/* About */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Central University of South Bihar</h3>
+            <div className="space-y-2 text-sm text-gray-300">
+              <p className="flex items-center gap-2"><FaMapMarker /> NH-120, Gaya Panchanpur Road, Gaya - 824236 (Bihar)</p>
+              <p className="flex items-center gap-2"><FaPhone /> +91-631-2229530</p>
+              <p className="flex items-center gap-2"><FaEnvelope /> registrar@cusb.ac.in</p>
+            </div>
+          </div>
 
-        {/* Left - Contact */}
-        <div>
-          <h2 className="mb-3 text-lg font-bold">
-            {t('footer.university')}
-          </h2>
+          {/* Departments */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Departments</h3>
+            <div className="grid grid-cols-2 gap-1 text-sm text-gray-300">
+              {departments.slice(0, 10).map((dept) => (
+                  <Link key={dept} to="/departments" className="hover:text-yellow-300">{dept}</Link>
+              ))}
+            </div>
+          </div>
 
-          <p><strong>Reception:</strong> +91-631-2229530</p>
-          <p><strong>Information:</strong> +91-631-2229507</p>
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Important Links</h3>
+            <ul className="space-y-2 text-sm text-gray-300">
+              {importantLinks.map((link) => (
+                <li key={link.label}>
+                    <a href={link.url} target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          <p className="mt-3">
-            <strong>Address:</strong> NH-120, Gaya Panchanpur Road
-          </p>
-          <p>Gaya - 824236 (Bihar) India</p>
-
-          <p className="mt-3">
-            <strong>Email:</strong> registrar@cub.ac.in
-          </p>
-        </div>
-
-        {/* Middle - Map */}
-        <div>
-          <h2 className="mb-3 text-lg font-bold">{t('footer.locateUs')}</h2>
-
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3308.6846877892494!2d84.88686167497507!3d24.872126977921678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398d2ba5426f7dbf%3A0x3c4a04dfea5ac7fb!2sCentral%20University%20of%20South%20Bihar%20(Gaya)!5e1!3m2!1sen!2sin!4v1773949721037!5m2!1sen!2sin"
-            className="w-full h-48 rounded"
-            style={{ border: 0 }}
-            loading="lazy"
-          ></iframe>
-        </div>
-
-        {/* Right - Links */}
-        <div>
-          <h2 className="mb-3 text-lg font-bold">Important Links</h2>
-
-          <ul className="space-y-2">
-            <li className="cursor-pointer hover:text-yellow-300">UGC</li>
-            <li className="cursor-pointer hover:text-yellow-300">AICTE</li>
-            <li className="cursor-pointer hover:text-yellow-300">NCTE</li>
-            <li className="cursor-pointer hover:text-yellow-300">Pharmacy Council</li>
-            <li className="cursor-pointer hover:text-yellow-300">Scholarship Portal</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* 🔴 SOCIAL */}
-      <div className="py-4 text-center border-t border-gray-400">
-        <p className="mb-2 font-semibold">FOLLOW US</p>
-
-        <div className="flex justify-center gap-4 text-xl">
-          <a href="https://www.facebook.com/cusbofficial/" target="_blank" rel="noopener noreferrer"><FaFacebook className="cursor-pointer hover:text-blue-500" /></a>
-          <a href="https://x.com/cusbofficial?lang=en" target="_blank" rel="noopener noreferrer"><FaTwitter className="cursor-pointer hover:text-blue-400" /></a>
-          <a href="https://www.youtube.com/@CUSBofficialchannel" target="_blank" rel="noopener noreferrer"><FaYoutube className="cursor-pointer hover:text-red-500" /></a>
-          <a href="https://www.instagram.com/cusbofficialpage/" target="_blank" rel="noopener noreferrer"><FaInstagram className="cursor-pointer hover:text-pink-500" /></a>
-          <a href="https://www.linkedin.com/school/cusb/posts/" target="_blank" rel="noopener noreferrer"><FaLinkedin className="cursor-pointer hover:text-blue-700" /></a>
+          {/* Map */}
+          <div>
+            <h3 className="text-lg font-bold mb-4">Location</h3>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3308.6846877892494!2d84.88686167497507!3d24.872126977921678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398d2ba5426f7dbf%3A0x3c4a04dfea5ac7fb!2sCentral%20University%20of%20South%20Bihar%20(Gaya)!5e1!3m2!1sen!2sin!4v1773949721037!5m2!1sen!2sin"
+              className="w-full h-40 rounded"
+              style={{ border: 0 }}
+              loading="lazy"
+              title="CUSB Location"
+            ></iframe>
+          </div>
         </div>
       </div>
 
-      {/* 🔴 BOTTOM */}
-      <div className="py-3 text-sm text-center bg-red-800">
-        © 2026 Central University of South Bihar
+      {/* Social & Copyright */}
+      <div className="border-t border-red-700">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex gap-4 text-xl">
+              <a href="https://www.facebook.com/cusbofficial/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400"><FaFacebook /></a>
+              <a href="https://x.com/cusbofficial" target="_blank" rel="noopener noreferrer" className="hover:text-blue-300"><FaTwitter /></a>
+              <a href="https://www.youtube.com/@CUSBofficialchannel" target="_blank" rel="noopener noreferrer" className="hover:text-red-400"><FaYoutube /></a>
+              <a href="https://www.instagram.com/cusbofficialpage/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400"><FaInstagram /></a>
+              <a href="https://www.linkedin.com/school/cusb/posts/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500"><FaLinkedin /></a>
+            </div>
+            <p className="text-sm text-gray-400 text-center">© 2026 Central University of South Bihar. All Rights Reserved.</p>
+          </div>
+        </div>
       </div>
-    </div>
+    </footer>
   );
 }
-
-export default Footer;

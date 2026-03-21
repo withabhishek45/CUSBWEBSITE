@@ -1,120 +1,76 @@
 import { Link } from "react-router-dom";
 
-function Programmes() {
+const programmes = [
+  {
+    title: "Undergraduate",
+    subtitle: "Bachelor's Degree Programmes",
+    desc: "Explore UG programmes in all departments",
+    image: "/images/ug.jpg",
+    path: "/undergraduate",
+    color: "from-blue-500 to-blue-700"
+  },
+  {
+    title: "Postgraduate",
+    subtitle: "Master's Degree Programmes",
+    desc: "Explore PG programmes in all departments",
+    image: "/images/pg.jpg",
+    path: "/postgraduate",
+    color: "from-green-500 to-green-700"
+  },
+  {
+    title: "Research",
+    subtitle: "PhD & Doctoral Programmes",
+    desc: "Explore PhD and research areas",
+    image: "/images/phd.jpg",
+    path: "/research",
+    color: "from-purple-500 to-purple-700"
+  },
+];
+
+export default function Programmes() {
   return (
-    <section className="pt-8 pb-0 border-t-4 border-blue-700 bg-gray-50">
-
-      <div className="flex flex-col md:flex-row">
-
-        {/* 🔵 Quick Links */}
-        <div className="w-full p-3 bg-gray-100 border-r md:w-1/5">
-
-          <h3 className="mb-3 text-lg font-bold text-blue-700">
-            Quick Links
-          </h3>
-
-          <div className="space-y-2 text-sm">
-            <Link to="/download" className="block px-3 py-2 text-white bg-blue-700 rounded">Download</Link>
-            <Link to="/notices" className="block px-3 py-2 text-white bg-blue-700 rounded">Academic Notices</Link>
-            <Link to="/committee" className="block px-3 py-2 text-white bg-blue-700 rounded">Committee</Link>
-            <Link to="/recent-events" className="block px-3 py-2 text-white bg-blue-700 rounded">Events</Link>
-            <Link to="/tenders" className="block px-3 py-2 text-white bg-blue-700 rounded">Tenders</Link>
-            <Link to="/recruitment" className="block px-3 py-2 text-white bg-blue-700 rounded">Recruitment</Link>
-            <Link to="/circular" className="block px-3 py-2 text-white bg-blue-700 rounded">Circular</Link>
-            <Link to="/nirf" className="block px-3 py-2 text-white bg-blue-700 rounded">NIRF</Link>
-            <Link to="/iqac" className="block px-3 py-2 text-white bg-blue-700 rounded">IQAC</Link>
-            <Link to="/admissions" className="block px-3 py-2 text-white bg-blue-700 rounded">Admission</Link>
+    <section className="py-10 bg-gradient-to-br from-yellow-50 to-orange-50">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <span className="h-8 w-1 bg-secondary-600"></span>
+            <h2 className="text-2xl font-bold text-gray-800">Study @ CUSB</h2>
           </div>
+          <p className="text-gray-600">Choose your path to excellence</p>
         </div>
 
-        {/* 🟢 Main Content */}
-        <div className="w-full md:w-4/5">
-          <div className="px-4 mx-auto max-w-7xl">
-
-            <h2 className="mb-8 text-3xl font-bold text-center text-blue-700">
-              Study @ CUSB
-            </h2>
-
-            {/* Cards */}
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-              {/* UG */}
-              <Link to="/undergraduate">
-                <div className="overflow-hidden transition bg-gray-300 shadow rounded-xl hover:shadow-xl group">
-
-                  <div className="overflow-hidden h-75">
-                    <img
-                      src="/images/ug.jpg"
-                      alt="UG"
-                      className="object-cover w-full h-full transition group-hover:scale-105"
-                    />
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="text-lg font-bold text-blue-700">
-                      UNDERGRADUATE PROGRAMMES
-                    </h3>
-                    <p className="text-sm text-gray-600">
-                      Explore UG programmes in all departments.
-                    </p>
+        {/* Programme Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {programmes.map((prog) => (
+            <Link key={prog.path} to={prog.path} className="block">
+              <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all group h-full">
+                <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
+                  <img
+                    src={prog.image}
+                    alt={prog.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-t ${prog.color} opacity-60`} />
+                  <div className="absolute bottom-4 left-4">
+                    <span className="text-white text-xs bg-white/20 px-2 py-1 rounded">{prog.subtitle}</span>
                   </div>
                 </div>
-              </Link>
-
-              {/* PG */}
-              <Link to="/postgraduate">
-                <div className="overflow-hidden transition bg-gray-300 shadow rounded-xl hover:shadow-xl group">
-
-                  <div className="overflow-hidden h-75">
-                    <img
-                      src="/images/pg.jpg"
-                      alt="PG"
-                      className="object-cover w-full h-full transition group-hover:scale-105"
-                    />
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="text-lg font-bold text-blue-700">
-                      POSTGRADUATE PROGRAMMES
-                    </h3>
-                    <p className="text-sm text-gray-600">
-                      Explore PG programmes in all departments.
-                    </p>
-                  </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">{prog.title} Programmes</h3>
+                  <p className="text-gray-600 text-sm mb-4">{prog.desc}</p>
+                  <span className="inline-flex items-center text-primary-600 font-medium text-sm group-hover:text-primary-700">
+                    Explore Programs
+                    <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
                 </div>
-              </Link>
-
-              {/* PhD */}
-              <Link to="/research">
-                <div className="overflow-hidden transition bg-gray-300 shadow rounded-xl hover:shadow-xl group">
-
-                  <div className="overflow-hidden h-75">
-                    <img
-                      src="/images/phd.jpg"
-                      alt="PhD"
-                      className="object-cover w-full h-full transition group-hover:scale-105"
-                    />
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="text-lg font-bold text-blue-700">
-                      RESEARCH PROGRAMMES
-                    </h3>
-                    <p className="text-sm text-gray-600">
-                      Explore PhD and research areas.
-                    </p>
-                  </div>
-                </div>
-              </Link>
-
-            </div>
-
-          </div>
+              </div>
+            </Link>
+          ))}
         </div>
-
       </div>
     </section>
   );
 }
-
-export default Programmes;

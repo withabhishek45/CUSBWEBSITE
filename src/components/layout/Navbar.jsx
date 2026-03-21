@@ -1,223 +1,219 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaTwitter,
-  FaYoutube,
-  FaHome,
-  FaBars,
-  FaTimes,
-} from "react-icons/fa";
-import { FiSearch, FiChevronDown } from "react-icons/fi";
+import { FaHome, FaBars, FaTimes, FaSearch, FaUserCircle, FaChevronDown } from "react-icons/fa";
 
 function Navbar() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
-
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showSocial, setShowSocial] = useState(false);
-  const [showLanguage, setShowLanguage] = useState(false);
-  const [language, setLanguage] = useState(t("language.en"));
+  const [showLogin, setShowLogin] = useState(false);
+  const [language, setLanguage] = useState("EN");
   const [search, setSearch] = useState("");
 
-  // ✅ Auto close menu on route change
   useEffect(() => {
     setMenuOpen(false);
+    setShowLogin(false);
   }, [location]);
 
-  // ✅ Close menu on click
-  const handleNavClick = () => {
-    setMenuOpen(false);
-  };
-
-  // ✅ Search
   const handleSearch = () => {
     if (!search.trim()) return;
     window.location.href = `/search?q=${search}`;
   };
 
+  const quickLinks = [
+    { label: "About", path: "/about" },
+    { label: "Departments", path: "/departments" },
+    { label: "Admissions", path: "/admissions" },
+    { label: "Notices", path: "/notices" },
+    { label: "News", path: "/news" },
+    { label: "Contact", path: "/contact" },
+  ];
+
+  const loginOptions = [
+    { label: "SAMARTH Student Login", url: "https://cusb.samarth.edu.in", color: "bg-blue-600" },
+    { label: "SAMARTH Employee Login", url: "https://cusb.samarth.ac.in", color: "bg-green-600" },
+    { label: "Admin Login", url: "/admin", color: "bg-red-600" },
+  ];
+
   return (
-    <div className="sticky top-0 z-50 w-full">
+    <nav className="sticky top-0 z-50 w-full shadow-md">
+      {/* 🔴 TOP NAVBAR */}
+      <div className="bg-red-800 text-white">
+        <div className="max-w-7xl mx-auto">
+          {/* Top Row */}
+          <div className="flex items-center justify-between px-4 py-2">
+            {/* Left - Home + Mobile Menu */}
+            <div className="flex items-center gap-4">
+              <button className="text-xl md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+                {menuOpen ? <FaTimes /> : <FaBars />}
+              </button>
+              <NavLink to="/" className="flex items-center gap-2 font-semibold text-yellow-300 hover:text-white">
+                <FaHome /> <span className="hidden sm:inline">Home</span>
+              </NavLink>
+            </div>
 
-      {/* 🔴 TOP BAR */}
-      <div className="flex items-center justify-between px-4 py-2 text-white bg-red-900">
+            {/* Center - Quick Links (Desktop) */}
+            <div className="hidden lg:flex items-center gap-4 text-sm">
+              {quickLinks.map((link) => (
+                <NavLink key={link.path} to={link.path} className="hover:text-yellow-300 transition whitespace-nowrap">
+                  {link.label}
+                </NavLink>
+              ))}
+            </div>
 
-        {/* LEFT */}
-        <div className="flex items-center gap-4">
-
-          {/* Mobile menu button */}
-          <button
-            className="text-xl md:hidden"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <FaTimes /> : <FaBars />}
-          </button>
-
-          {/* Home */}
-          <NavLink
-            to="/"
-            onClick={handleNavClick}
-            className="flex items-center gap-1 font-semibold text-yellow-300"
-          >
-            <FaHome /> {t("nav.home")}
-          </NavLink>
-
-          {/* Desktop Menu */}
-          <div className="items-center hidden gap-5 text-sm md:flex">
-            <NavLink to="/about" className="hover:text-yellow-300">{t("nav.about")}</NavLink>
-            <NavLink to="/administration" className="hover:text-yellow-300">{t("nav.administration")}</NavLink>
-            <NavLink to="/students" className="hover:text-yellow-300">Students</NavLink>
-            <NavLink to="/faculty-staff" className="hover:text-yellow-300">Faculty</NavLink>
-            <NavLink to="/visitors" className="hover:text-yellow-300">Visitors</NavLink>
-            <NavLink to="/notices" className="hover:text-yellow-300">Notices</NavLink>
-
-            <a href="https://cusb.samarth.edu.in" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300">
-              {t("nav.studentLogin")}
-            </a>
-
-            <a href="https://cusb.samarth.ac.in" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300">
-              {t("nav.employeeLogin")}
-            </a>
-
-            {/*  Blinking Admission */}
-            <NavLink
-              to="/admissions"
-              className="relative px-3 py-1 font-semibold text-white bg-red-500 rounded animate-[pulse_1.5s_infinite]"
-            >
-              Admission 2026
-              <span className="absolute px-1 text-xs text-white bg-red-800 rounded-full -top-2 -right-2 animate-bounce">
-                NEW
-              </span>
-            </NavLink>
-          </div>
-        </div>
-
-        {/* RIGHT SIDE (Desktop) */}
-        <div className="items-center hidden gap-4 md:flex">
-
-          {/* Search */}
-          <div className="flex items-center overflow-hidden bg-white rounded">
-            <input
-              type="text"
-              placeholder={t("nav.search")}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              className="w-32 px-2 py-1 text-black outline-none"
-            />
-            <button onClick={handleSearch} className="p-2 text-black">
-              <FiSearch />
-            </button>
-          </div>
-
-          {/* Social */}
-          <div
-            className="relative"
-            onMouseEnter={() => setShowSocial(true)}
-            onMouseLeave={() => setShowSocial(false)}
-          >
-            <button className="flex items-center gap-1 hover:text-yellow-300">
-              Social <FiChevronDown />
-            </button>
-
-            {showSocial && (
-              <div className="absolute right-0 z-50 p-4 text-black bg-white rounded shadow-lg w-60">
-                <a href="https://www.facebook.com/cusbofficial/" target="_blank" className="flex gap-2 py-1 hover:text-blue-600"><FaFacebook /> Facebook</a>
-                <a href="https://x.com/cusbofficial" target="_blank" className="flex gap-2 py-1 hover:text-blue-400"><FaTwitter /> X</a>
-                <a href="https://www.instagram.com/cusbofficialpage/" target="_blank" className="flex gap-2 py-1 hover:text-pink-600"><FaInstagram /> Instagram</a>
-                <a href="https://www.linkedin.com/school/cusb/posts/" target="_blank" className="flex gap-2 py-1 hover:text-blue-700"><FaLinkedin /> LinkedIn</a>
-                <a href="https://www.youtube.com/@CUSBofficialchannel" target="_blank" className="flex gap-2 py-1 hover:text-red-600"><FaYoutube /> YouTube</a>
-              </div>
-            )}
-          </div>
-
-          {/* Language */}
-          <div
-            className="relative"
-            onMouseEnter={() => setShowLanguage(true)}
-            onMouseLeave={() => setShowLanguage(false)}
-          >
-            <button className="flex items-center gap-1 hover:text-yellow-300">
-              {language} <FiChevronDown />
-            </button>
-
-            {showLanguage && (
-              <div className="absolute right-0 z-50 p-2 text-black bg-white rounded shadow-lg">
-                <button
-                  onClick={() => {
-                    i18n.changeLanguage("en");
-                    setLanguage("English");
-                  }}
-                  className="block w-full px-4 py-2 text-left hover:bg-blue-500 hover:text-white"
-                >
-                  English
-                </button>
-                <button
-                  onClick={() => {
-                    i18n.changeLanguage("hi");
-                    setLanguage("हिंदी");
-                  }}
-                  className="block w-full px-4 py-2 text-left hover:bg-orange-500 hover:text-white"
-                >
-                  हिंदी
+            {/* Right - Search + Login Dropdown + Language */}
+            <div className="flex items-center gap-3">
+              {/* Search */}
+              <div className="hidden md:flex items-center bg-white rounded overflow-hidden">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                  className="w-24 lg:w-32 px-2 py-1 text-sm text-gray-800 outline-none"
+                />
+                <button onClick={handleSearch} className="p-2 text-gray-800">
+                  <FaSearch />
                 </button>
               </div>
-            )}
+
+              {/* Login Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowLogin(!showLogin)}
+                  onMouseEnter={() => setShowLogin(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-red-900 font-semibold rounded hover:bg-yellow-400 transition"
+                >
+                  <FaUserCircle />
+                  <span className="hidden sm:inline">Login</span>
+                  <FaChevronDown className={`transition-transform ${showLogin ? 'rotate-180' : ''}`} />
+                </button>
+
+                {showLogin && (
+                  <div
+                    className="absolute right-0 mt-2 w-64 bg-white text-gray-800 rounded-lg shadow-xl z-50 overflow-hidden"
+                    onMouseLeave={() => setShowLogin(false)}
+                  >
+                    <div className="p-3 bg-red-800 text-white font-semibold">
+                      Select Login Type
+                    </div>
+                    <div className="py-2">
+                      {loginOptions.map((option, index) => (
+                        <a
+                          key={index}
+                          href={option.url}
+                          target={option.url.startsWith("http") ? "_blank" : "_self"}
+                          rel="noopener noreferrer"
+                          className={`flex items-center gap-3 px-4 py-3 text-white hover:opacity-90 transition ${option.color}`}
+                        >
+                          <FaUserCircle />
+                          <span>{option.label}</span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Language */}
+              <select
+                value={language}
+                onChange={(e) => {
+                  setLanguage(e.target.value);
+                  i18n.changeLanguage(e.target.value === "हिंदी" ? "hi" : "en");
+                }}
+                className="bg-red-700 text-white text-sm px-2 py-2 rounded cursor-pointer"
+              >
+                <option>EN</option>
+                <option>हिंदी</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Admission Banner */}
+          <div className="hidden md:block bg-yellow-500 text-red-900 text-center py-1 font-bold text-sm">
+            <NavLink to="/admissions">📢 Admissions Open 2026-27 | Click Here to Apply</NavLink>
           </div>
         </div>
       </div>
 
       {/* 🔴 MOBILE MENU */}
       {menuOpen && (
-        <div className="flex flex-col px-4 py-4 space-y-3 text-sm text-white bg-red-800 md:hidden">
+        <div className="bg-red-900 text-white md:hidden">
+          <div className="px-4 py-4 space-y-3">
+            {/* Mobile Search */}
+            <div className="flex items-center bg-white rounded overflow-hidden">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="flex-1 px-3 py-2 text-gray-800 outline-none"
+              />
+              <button onClick={handleSearch} className="p-2 text-gray-800">
+                <FaSearch />
+              </button>
+            </div>
 
-          <NavLink to="/about" onClick={handleNavClick}>About</NavLink>
-          <NavLink to="/administration" onClick={handleNavClick}>Administration</NavLink>
-          <NavLink to="/students" onClick={handleNavClick}>Students</NavLink>
-          <NavLink to="/faculty-staff" onClick={handleNavClick}>Faculty</NavLink>
-          <NavLink to="/visitors" onClick={handleNavClick}>Visitors</NavLink>
-          <NavLink to="/notices" onClick={handleNavClick}>Notices</NavLink>
+            {/* Mobile Links */}
+            {quickLinks.map((link) => (
+              <NavLink key={link.path} to={link.path} className="block py-2 hover:text-yellow-300 border-b border-red-800">
+                {link.label}
+              </NavLink>
+            ))}
 
-          <a href="https://cusb.samarth.edu.in" onClick={handleNavClick}>
-            Student Login
-          </a>
+            {/* Mobile Login Options */}
+            <div className="border-t border-red-800 pt-3 space-y-2">
+              <p className="font-semibold text-yellow-300">Login Options:</p>
+              {loginOptions.map((option, index) => (
+                <a
+                  key={index}
+                  href={option.url}
+                  target={option.url.startsWith("http") ? "_blank" : "_self"}
+                  rel="noopener noreferrer"
+                  className={`flex items-center gap-2 py-2 px-3 text-white rounded ${option.color}`}
+                >
+                  <FaUserCircle />
+                  <span>{option.label}</span>
+                </a>
+              ))}
+            </div>
 
-          <a href="https://cusb.samarth.ac.in" onClick={handleNavClick}>
-            Employee Login
-          </a>
+            {/* Admissions */}
+            <NavLink to="/admissions" className="block text-center py-3 bg-yellow-500 text-red-900 font-bold rounded mt-2">
+              📢 Admissions Open 2026-27
+            </NavLink>
 
-          {/* Search Mobile */}
-          <div className="flex items-center mt-2 overflow-hidden bg-white rounded">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-2 py-1 text-black outline-none"
-            />
-            <button onClick={handleSearch} className="p-2 text-black">
-              <FiSearch />
-            </button>
+            {/* Language */}
+            <div className="flex gap-2 pt-2">
+              <button onClick={() => { i18n.changeLanguage("en"); setLanguage("EN"); }}
+                className={`flex-1 py-2 rounded ${language === "EN" ? "bg-white text-red-900" : "bg-red-800 text-white border border-white/30"}`}>
+                English
+              </button>
+              <button onClick={() => { i18n.changeLanguage("hi"); setLanguage("हिंदी"); }}
+                className={`flex-1 py-2 rounded ${language === "हिंदी" ? "bg-white text-red-900" : "bg-red-800 text-white border border-white/30"}`}>
+                हिंदी
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-      {/* ⚪ MAIN NAVBAR */}
-      <div className="flex items-center justify-between px-6 py-4 bg-white shadow">
-
-        <NavLink to="/" onClick={handleNavClick}>
-          <img src="/images/name-logo.png" className="h-14 md:h-16" />
-        </NavLink>
-
-        <div className="hidden gap-4 md:flex">
-          <img src="/images/vikshit_bharat_f.jpg" className="h-18" />
-          <img src="/images/naac2.png" className="h-18 " />
+      {/* ⚪ LOGO BAR */}
+      <div className="bg-white border-b">
+        <div className="flex items-center justify-between max-w-7xl mx-auto px-4 py-1">
+          <NavLink to="/">
+            <img src="/images/name-logo.png" style={{height: "90px"}} alt="CUSB" />
+          </NavLink>
+          <div className="hidden md:flex items-center gap-2">
+            <img src="/images/vikshit_bharat_f.jpg" style={{height: "70px"}} alt="Viksit Bharat" />
+            <img src="/images/naac2.png" style={{height: "75px"}} alt="NAAC" />
+          </div>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
 

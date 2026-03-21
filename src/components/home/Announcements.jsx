@@ -1,91 +1,60 @@
 import { useEffect, useRef, useState } from "react";
-
-const announcements = [
-  {
-    id: 1,
-    text: "🎓 Admissions Open for 2026-27 | Apply Now",
-  },
-  {
-    id: 2,
-    text: "🏆 Fellowship 2026 - Applications Deadline Extended",
-  },
-  {
-    id: 3,
-    text: "📢 Vigilance Awareness Week - 27th October to 2nd November, 2025",
-  },
-  {
-    id: 4,
-    text: "🔬 Research Grant Opportunities Available for Faculty",
-  },
-  {
-    id: 5,
-    text: "🎉 Annual Fest 2026 - Register Your Team",
-  },
-  {
-    id: 6,
-    text: "📚 New Online Courses Launched | Enroll Today",
-  },
-];
+import { api } from "../../utils/api";
 
 export default function Announcements() {
   const scrollRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [announcements, setAnnouncements] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await api.get("/announcements");
+      if (data) setAnnouncements(data);
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const scroll = scrollRef.current;
-    if (!scroll || isPaused) return;
-
-    let scrollAmount = 0;
-    const scrollSpeed = 1;
+    if (!scroll || isPaused || announcements.length === 0) return;
 
     const autoScroll = setInterval(() => {
-      scrollAmount += scrollSpeed;
       if (scroll.scrollLeft >= scroll.scrollWidth - scroll.clientWidth) {
-        scrollAmount = 0;
         scroll.scrollLeft = 0;
       } else {
-        scroll.scrollLeft += scrollSpeed;
+        scroll.scrollLeft += 1;
       }
-    }, 20);
+    }, 30);
 
     return () => clearInterval(autoScroll);
-  }, [isPaused]);
+  }, [isPaused, announcements]);
 
   return (
-    <section className="w-full py-5 overflow-hidden text-white bg-blue-700">
-      <div className="flex items-center gap-6 px-6">
-        {/* Header */}
-        <div className="flex-shrink-0 px-4 py-2 font-bold text-blue-700 bg-white rounded whitespace-nowrap">
-          📌 Announcements
+    <div className="w-full py-3 bg-red-700 text-white shadow-md">
+      <div className="flex items-center max-w-7xl mx-auto px-4">
+        <div className="flex-shrink-0 px-4 py-2 bg-yellow-500 text-red-800 font-bold rounded-lg shadow text-sm md:text-base">
+          📢 Announcements
         </div>
-
-        {/* Scrolling Announcements */}
         <div
           ref={scrollRef}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
-          className="flex flex-1 gap-8 overflow-x-auto scroll-smooth hide-scrollbar"
-          style={{ scrollBehavior: "smooth" }}
+          className="flex-1 flex gap-8 overflow-x-auto ml-4 scroll-smooth hide-scrollbar"
         >
-          {announcements.map((announcement) => (
-            <div
-              key={announcement.id}
-              className="flex-shrink-0 whitespace-nowrap text-sm sm:text-base hover:text-yellow-300 transition duration-300 cursor-pointer after:content-['|'] after:ml-2 after:text-white/70"
-            >
-              {announcement.text}
-            </div>
-          ))}
-          {/* Repeat announcements for seamless loop */}
-          {announcements.map((announcement) => (
-            <div
-              key={`repeat-${announcement.id}`}
-              className="flex-shrink-0 whitespace-nowrap text-sm sm:text-base hover:text-yellow-300 transition duration-300 cursor-pointer after:content-['|'] after:ml-2 after:text-white/70"
-            >
-              {announcement.text}
-            </div>
-          ))}
+          {announcements.length > 0 ? (
+            <>
+              {[...announcements, ...announcements].map((item, idx) => (
+                <span key={idx} className="flex-shrink-0 text-white text-sm md:text-base whitespace-nowrap cursor-pointer hover:text-yellow-300 font-medium">
+                  {item.text}
+                  <span className="mx-4 text-white/50">•</span>
+                </span>
+              ))}
+            </>
+          ) : (
+            <span className="text-white/70 text-sm">Loading announcements...</span>
+          )}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
