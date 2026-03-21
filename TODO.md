@@ -1,9 +1,1 @@
-# Site Deployment & Fixes TODO
-
-- [x] Build test: npm run build ✅
-- [x] Optimize .gitignore ✅
-- [x] Push to GitHub https://github.com/withabhishek45/CUSBWEBSITE ✅
-- [x] Image fix: Move to public/images + update paths ✅ (in progress)
-- [ ] Deploy Vercel/Netlify: vercel.com/new → Import → Live!
-
-After fixes: cd university-website && git push → auto-redeploy.
+# University Website Deployment TODO&#10;&#10;Previous:&#10;- [x] Build test: npm run build ✅&#10;- [x] Optimize .gitignore ✅&#10;- [x] Push to GitHub https://github.com/withabhishek45/CUSBWEBSITE ✅&#10;- [x] Image fix: Move to public/images + update paths ✅&#10;&#10;Netlify Deployment:&#10;1. [ ] Create public/_redirects for React Router&#10;2. [ ] Test npm run build → verify dist/&#10;3. [ ] Deploy on Netlify (GitHub import: repo → npm run build → dist)&#10;4. [ ] Add live URL here&#10;5. [ ] Test site (routing, images, refresh)

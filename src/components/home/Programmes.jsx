@@ -17,13 +17,13 @@ function Programmes() {
             <Link to="/download" className="block px-3 py-2 text-white bg-blue-700 rounded">Download</Link>
             <Link to="/notices" className="block px-3 py-2 text-white bg-blue-700 rounded">Academic Notices</Link>
             <Link to="/committee" className="block px-3 py-2 text-white bg-blue-700 rounded">Committee</Link>
-            <Link to="/events" className="block px-3 py-2 text-white bg-blue-700 rounded">Events</Link>
+            <Link to="/recent-events" className="block px-3 py-2 text-white bg-blue-700 rounded">Events</Link>
             <Link to="/tenders" className="block px-3 py-2 text-white bg-blue-700 rounded">Tenders</Link>
             <Link to="/recruitment" className="block px-3 py-2 text-white bg-blue-700 rounded">Recruitment</Link>
             <Link to="/circular" className="block px-3 py-2 text-white bg-blue-700 rounded">Circular</Link>
             <Link to="/nirf" className="block px-3 py-2 text-white bg-blue-700 rounded">NIRF</Link>
             <Link to="/iqac" className="block px-3 py-2 text-white bg-blue-700 rounded">IQAC</Link>
-            <Link to="/admission" className="block px-3 py-2 text-white bg-blue-700 rounded">Admission</Link>
+            <Link to="/admissions" className="block px-3 py-2 text-white bg-blue-700 rounded">Admission</Link>
           </div>
         </div>
 

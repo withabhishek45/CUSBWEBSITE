@@ -22,6 +22,8 @@ import Students from "./pages/Students";
 import FacultyAndStaff from "./pages/FacultyAndStaff";
 import Visitors from "./pages/Visitors";
 import Notices  from "./data/notices";
+import Downloads from "./pages/Downloads";
+
 
 
 function App() {
@@ -50,6 +52,7 @@ function App() {
         <Route path="/faculty-staff" element={<FacultyAndStaff />} />
         <Route path="/visitors" element={<Visitors />} />
         <Route path="/notices" element={<Notices />} />
+        <Route path="/download" element={<Downloads />} />
       </Routes>
 
       <Footer />
