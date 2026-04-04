@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const UNI_NAME = "Central University of South Bihar";
 
@@ -11,60 +12,97 @@ const slides = [
 
 export default function Slider() {
   const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const slideCount = useMemo(() => slides.length, []);
 
   useEffect(() => {
+    if (isPaused) return;
     const timer = setInterval(() => setCurrent((prev) => (prev + 1) % slideCount), 5000);
     return () => clearInterval(timer);
-  }, [slideCount]);
+  }, [slideCount, isPaused]);
 
   const goTo = (index) => setCurrent((index + slideCount) % slideCount);
 
+  const nextSlide = () => goTo(current + 1);
+  const prevSlide = () => goTo(current - 1);
+
   return (
-    <section className="relative w-full h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[85vh] overflow-hidden">
+    <section 
+      className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-500 ${index === current ? "opacity-100 z-10" : "opacity-0 z-0"}`}
+          className={`absolute inset-0 transition-opacity duration-700 ${index === current ? "opacity-100 z-10" : "opacity-0 z-0"}`}
         >
-          <img src={slide.src} alt={slide.title} className="w-full h-full object-cover object-center" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8 sm:px-16 text-white">
-            <h2 className="text-lg sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 drop-shadow-xl leading-tight">
+          <img 
+            src={slide.src} 
+            alt={slide.title} 
+            className="w-full h-full object-cover" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 sm:px-8 md:px-16 text-white">
+            <h2 className="text-base sm:text-xl md:text-3xl lg:text-5xl font-bold mb-1 sm:mb-3 md:mb-4 drop-shadow-xl leading-tight max-w-4xl">
               {slide.title}
             </h2>
-            <p className="text-xs sm:text-base md:text-lg lg:text-xl text-white/95 drop-shadow">
+            <p className="text-xs sm:text-sm md:text-base lg:text-xl text-white/90 drop-shadow max-w-2xl hidden sm:block">
               {slide.subtitle}
             </p>
+            <div className="mt-3 sm:mt-4 md:mt-6 flex gap-2 sm:gap-3">
+              <a 
+                href="/admissions" 
+                className="px-3 sm:px-6 md:px-8 py-1.5 sm:py-2 md:py-3 bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm md:text-base font-semibold rounded-lg transition"
+              >
+                Apply Now
+              </a>
+              <a 
+                href="/about" 
+                className="px-3 sm:px-6 md:px-8 py-1.5 sm:py-2 md:py-3 bg-white/20 hover:bg-white/30 text-white text-xs sm:text-sm md:text-base font-semibold rounded-lg transition backdrop-blur"
+              >
+                Learn More
+              </a>
+            </div>
           </div>
         </div>
       ))}
 
-      {/* Left Arrow */}
+      {/* Navigation Arrows */}
       <button
-        onClick={() => goTo(current - 1)}
-        className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-14 sm:h-14 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-gray-900 font-bold text-xl sm:text-3xl shadow-xl transition"
+        onClick={prevSlide}
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-gray-900 shadow-lg transition hover:scale-110"
+        aria-label="Previous slide"
       >
-        ‹
+        <FaChevronLeft className="text-sm sm:text-lg md:text-2xl" />
       </button>
 
-      {/* Right Arrow */}
       <button
-        onClick={() => goTo(current + 1)}
-        className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-14 sm:h-14 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-gray-900 font-bold text-xl sm:text-3xl shadow-xl transition"
+        onClick={nextSlide}
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-gray-900 shadow-lg transition hover:scale-110"
+        aria-label="Next slide"
       >
-        ›
+        <FaChevronRight className="text-sm sm:text-lg md:text-2xl" />
       </button>
 
       {/* Dots */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2 sm:gap-3">
+      <div className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 sm:gap-2">
         {slides.map((_, idx) => (
           <button
             key={idx}
             onClick={() => goTo(idx)}
-            className={`rounded-full transition-all ${idx === current ? "bg-white w-6 sm:w-10 h-2 sm:h-3" : "bg-white/60 w-2 sm:w-3 h-2 sm:h-3"}`}
+            className={`rounded-full transition-all ${idx === current ? "bg-white w-6 sm:w-8 h-2 sm:h-2" : "bg-white/60 w-2 h-2"}`}
+            aria-label={`Go to slide ${idx + 1}`}
           />
         ))}
+      </div>
+
+      {/* Progress Bar */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 h-1 bg-white/20">
+        <div 
+          className="h-full bg-white/80 transition-all duration-300"
+          style={{ width: `${((current + 1) / slideCount) * 100}%` }}
+        />
       </div>
     </section>
   );
