@@ -6,8 +6,8 @@ function Stats() {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await api.get("/stats");
-      if (data) setStats(data);
+      const data = await api.getAll();
+      if (data?.stats) setStats(data.stats);
     }
     fetchData();
   }, []);

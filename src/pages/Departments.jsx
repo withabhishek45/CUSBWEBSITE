@@ -5,33 +5,18 @@ import { FaBook, FaFlask, FaCalculator, FaBalanceScale, FaLanguage, FaHistory, F
 import BackToTop from "../components/layout/BackToTop";
 
 const iconMap = {
-  "Agriculture": FaLeaf,
-  "Biotechnology": FaDna,
-  "Chemistry": FaFlask,
-  "Commerce & Business Studies": FaChartLine,
-  "Computer Science": FaLaptop,
-  "Economics": FaChartLine,
-  "English": FaLanguage,
-  "Hindi": FaLanguage,
-  "History": FaHistory,
-  "Law & Governance": FaBalanceScale,
-  "Mathematics": FaCalculator,
-  "Physics": FaAtom,
-};
-
-const pathMap = {
-  "Agriculture": "/departments/agriculture",
-  "Biotechnology": "/departments/biotechnology",
-  "Chemistry": "/departments/chemistry",
-  "Commerce & Business Studies": "/departments/commerce",
-  "Computer Science": "/departments/computer-science",
-  "Economics": "/departments/economics",
-  "English": "/departments/english",
-  "Hindi": "/departments/hindi",
-  "History": "/departments/history",
-  "Law & Governance": "/departments/law",
-  "Mathematics": "/departments/mathematics",
-  "Physics": "/departments/physics",
+  "agriculture": FaLeaf,
+  "biotechnology": FaDna,
+  "chemistry": FaFlask,
+  "commerce": FaChartLine,
+  "computer-science": FaLaptop,
+  "economics": FaChartLine,
+  "english": FaLanguage,
+  "hindi": FaLanguage,
+  "history": FaHistory,
+  "law": FaBalanceScale,
+  "mathematics": FaCalculator,
+  "physics": FaAtom,
 };
 
 const colorMap = [
@@ -53,35 +38,26 @@ export default function Departments() {
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [activeTab, setActiveTab] = useState("all");
 
   useEffect(() => {
     async function fetchData() {
-      const data = await api.get("/departments");
-      if (data) setDepartments(data);
+      const allData = await api.getAll();
+      if (allData?.departments) setDepartments(allData.departments);
       setLoading(false);
     }
     fetchData();
   }, []);
 
   const filteredDepts = departments.filter(dept => 
-    dept.name.toLowerCase().includes(search.toLowerCase())
+    dept.name?.toLowerCase().includes(search.toLowerCase())
   );
 
-  const getIcon = (name) => {
-    for (const [key, icon] of Object.entries(iconMap)) {
-      if (name.toLowerCase().includes(key.toLowerCase())) {
-        return icon;
-      }
-    }
-    return FaBook;
-  };
+  const getIcon = (id) => iconMap[id] || FaBook;
 
   const getColor = (index) => colorMap[index % colorMap.length];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
-      {/* Header */}
       <div className="bg-gradient-to-r from-red-700 via-red-600 to-red-700 text-white">
         <div className="max-w-7xl mx-auto px-4 py-10 sm:py-12">
           <div className="text-center mb-6">
@@ -95,7 +71,6 @@ export default function Departments() {
             </p>
           </div>
           
-          {/* Search */}
           <div className="max-w-xl mx-auto relative">
             <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
             <input
@@ -109,7 +84,6 @@ export default function Departments() {
         </div>
       </div>
 
-      {/* Stats Bar */}
       <div className="bg-white shadow-lg -mt-4 mx-4 sm:mx-auto max-w-7xl rounded-xl relative z-10">
         <div className="grid grid-cols-3 gap-4 p-4 text-center">
           <div className="p-3">
@@ -127,7 +101,6 @@ export default function Departments() {
         </div>
       </div>
 
-      {/* Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -138,15 +111,13 @@ export default function Departments() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredDepts.map((dept, index) => {
-              const Icon = getIcon(dept.name);
+              const Icon = getIcon(dept.id);
               const colorClass = getColor(index);
-              const deptPath = pathMap[dept.name] || `/departments/${dept.id}`;
               return (
                 <div 
                   key={dept.id} 
                   className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2"
                 >
-                  {/* Gradient Top */}
                   <div className={`h-24 bg-gradient-to-br ${colorClass} relative`}>
                     <div className="absolute inset-0 bg-black/10"></div>
                     <div className="absolute -bottom-8 left-6 w-16 h-16 bg-white rounded-2xl shadow-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -154,7 +125,6 @@ export default function Departments() {
                     </div>
                   </div>
                   
-                  {/* Content */}
                   <div className="p-5 pt-8">
                     <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
                       {dept.name}
@@ -163,9 +133,8 @@ export default function Departments() {
                       {dept.description}
                     </p>
                     
-                    {/* Programs */}
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {dept.programs.map((prog, i) => (
+                      {dept.programs?.map((prog, i) => (
                         <span 
                           key={i} 
                           className="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full hover:bg-blue-100 hover:text-blue-700 transition-colors cursor-pointer"
@@ -175,9 +144,8 @@ export default function Departments() {
                       ))}
                     </div>
                     
-                    {/* CTA */}
                     <Link 
-                      to={deptPath}
+                      to={`/departments/${dept.id}`}
                       className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
                     >
                       View Full Details <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
@@ -199,7 +167,6 @@ export default function Departments() {
           </div>
         )}
 
-        {/* Info Section */}
         {!loading && filteredDepts.length > 0 && (
           <div className="mt-12 grid md:grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white">

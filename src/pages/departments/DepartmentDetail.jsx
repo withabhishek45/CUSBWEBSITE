@@ -43,12 +43,13 @@ export default function DepartmentDetail() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const [deptData, facultyData] = await Promise.all([
-        api.get(`/departments/${id}`),
-        api.get(`/faculty?department=${id}`)
-      ]);
-      setDepartment(deptData);
-      setFaculty(facultyData || []);
+      const allData = await api.getAll();
+      if (allData) {
+        const dept = allData.departments?.find(d => d.id === id);
+        const fac = allData.faculty?.filter(f => f.department === id) || [];
+        setDepartment(dept);
+        setFaculty(fac);
+      }
       setLoading(false);
     }
     fetchData();

@@ -16,16 +16,14 @@ export default function SectionTabs() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const [recent, upcoming, notices] = await Promise.all([
-        api.get("/events?type=recent"),
-        api.get("/events?type=upcoming"),
-        api.get("/notices"),
-      ]);
-      setData({
-        recentEvents: recent || [],
-        upcomingEvents: upcoming || [],
-        notices: notices || []
-      });
+      const allData = await api.getAll();
+      if (allData) {
+        setData({
+          recentEvents: allData.events?.filter(e => e.type === 'recent') || [],
+          upcomingEvents: allData.events?.filter(e => e.type === 'upcoming') || [],
+          notices: allData.notices || []
+        });
+      }
       setLoading(false);
     }
     fetchData();
@@ -46,13 +44,11 @@ export default function SectionTabs() {
   return (
     <section className="py-10 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
         <div className="flex items-center gap-3 mb-6">
           <span className="h-8 w-1 bg-green-600"></span>
           <h2 className="text-2xl font-bold text-gray-800">Latest Updates</h2>
         </div>
 
-        {/* Tabs */}
         <div className="flex flex-wrap gap-2 mb-6">
           {sections.map((section) => (
             <button
@@ -69,7 +65,6 @@ export default function SectionTabs() {
           ))}
         </div>
 
-        {/* Content */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[1,2,3,4].map(i => (

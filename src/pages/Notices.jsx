@@ -14,8 +14,10 @@ export default function Notices() {
   useEffect(() => {
     async function fetchNotices() {
       setLoading(true);
-      const data = await api.get("/notices");
-      setNotices(data || []);
+      const allData = await api.getAll();
+      if (allData?.notices) {
+        setNotices(allData.notices);
+      }
       setLoading(false);
     }
     fetchNotices();
