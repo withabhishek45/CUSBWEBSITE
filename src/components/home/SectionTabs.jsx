@@ -3,12 +3,9 @@ import { Link } from "react-router-dom";
 import { api } from "../../utils/api";
 
 const sections = [
-  { id: "recent-events", title: "Recent Events", route: "/recent-events" },
-  { id: "upcoming-events", title: "Upcoming Events", route: "/upcoming-events" },
-  { id: "tenders", title: "Tenders", route: "/tenders" },
-  { id: "recruitment", title: "Recruitment", route: "/recruitment" },
-  { id: "updates", title: "Updates", route: "/updates" },
-  { id: "newsletter", title: "Newsletter", route: "/newsletter" },
+  { id: "recent-events", title: "Recent Events", route: "/notices" },
+  { id: "upcoming-events", title: "Upcoming Events", route: "/notices" },
+  { id: "notices", title: "Notices", route: "/notices" },
 ];
 
 export default function SectionTabs() {
@@ -19,21 +16,15 @@ export default function SectionTabs() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const [recent, upcoming, tenders, recruitment, updates, newsletters] = await Promise.all([
-        api.get("/events/recent"),
-        api.get("/events/upcoming"),
-        api.get("/tenders"),
-        api.get("/recruitment"),
-        api.get("/updates"),
-        api.get("/newsletters"),
+      const [recent, upcoming, notices] = await Promise.all([
+        api.get("/events?type=recent"),
+        api.get("/events?type=upcoming"),
+        api.get("/notices"),
       ]);
       setData({
         recentEvents: recent || [],
         upcomingEvents: upcoming || [],
-        tenders: tenders || [],
-        recruitment: recruitment || [],
-        updates: updates || [],
-        newsletters: newsletters || []
+        notices: notices || []
       });
       setLoading(false);
     }
@@ -44,10 +35,7 @@ export default function SectionTabs() {
     switch (active) {
       case "recent-events": return data.recentEvents || [];
       case "upcoming-events": return data.upcomingEvents || [];
-      case "tenders": return data.tenders || [];
-      case "recruitment": return data.recruitment || [];
-      case "updates": return data.updates || [];
-      case "newsletter": return data.newsletters || [];
+      case "notices": return data.notices || [];
       default: return [];
     }
   };
