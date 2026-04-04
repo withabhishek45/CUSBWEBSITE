@@ -5,7 +5,7 @@ import SectionTabs from "../components/home/SectionTabs";
 import Programmes from "../components/home/Programmes";
 import AboutSection from "../components/home/AboutSection";
 import Gallery from "../components/home/Gallery";
-import Stats from "../components/home/stats";
+
 import BackToTop from "../components/layout/BackToTop";
 
 function Home() {
@@ -18,7 +18,6 @@ function Home() {
       <Programmes />
       <AboutSection />
       <Gallery />
-      <Stats />
       <BackToTop />
     </>
   );

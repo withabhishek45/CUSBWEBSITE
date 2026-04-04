@@ -11,10 +11,18 @@ import {
 import { Link } from "react-router-dom";
 
 const departments = [
-  "Agriculture", "Biotechnology", "Chemistry", "Commerce & Business Studies",
-  "Computer Science", "Economics", "English", "Hindi", "History",
-  "Law & Governance", "Mathematics", "Physics", "Political Studies & IR",
-  "Psychology", "Sociology", "Statistics", "Teacher Education",
+  { name: "Agriculture", path: "/departments/agriculture" },
+  { name: "Biotechnology", path: "/departments/biotechnology" },
+  { name: "Chemistry", path: "/departments/chemistry" },
+  { name: "Commerce", path: "/departments/commerce" },
+  { name: "Computer Science", path: "/departments/computer-science" },
+  { name: "Economics", path: "/departments/economics" },
+  { name: "English", path: "/departments/english" },
+  { name: "Hindi", path: "/departments/hindi" },
+  { name: "History", path: "/departments/history" },
+  { name: "Law", path: "/departments/law" },
+  { name: "Mathematics", path: "/departments/mathematics" },
+  { name: "Physics", path: "/departments/physics" },
 ];
 
 const importantLinks = [
@@ -26,26 +34,31 @@ const importantLinks = [
   { label: "Privacy Policy", url: "#" },
 ];
 
+const quickLinks = [
+  { label: "Students", path: "/students" },
+  { label: "Notices", path: "/notices" },
+  { label: "Examinations", path: "/students" },
+  { label: "Scholarships", path: "/students" },
+  { label: "Contact", path: "/contact" },
+];
+
 export default function Footer() {
   return (
     <footer className="bg-red-900 text-white">
-      {/* Quick Links Bar */}
       <div className="bg-red-800 py-4">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm">
-            <Link to="/students" className="hover:text-yellow-300">Students</Link>
-            <Link to="/faculty-staff" className="hover:text-yellow-300">Faculty & Staff</Link>
-            <Link to="/research" className="hover:text-yellow-300">Research</Link>
-            <Link to="/download" className="hover:text-yellow-300">Downloads</Link>
-            <Link to="/contact" className="hover:text-yellow-300">Contact</Link>
+            {quickLinks.map((link) => (
+              <Link key={link.path} to={link.path} className="hover:text-yellow-300">
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 py-10">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {/* About */}
           <div>
             <h3 className="text-lg font-bold mb-4">Central University of South Bihar</h3>
             <div className="space-y-2 text-sm text-gray-300">
@@ -55,23 +68,23 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Departments */}
           <div>
             <h3 className="text-lg font-bold mb-4">Departments</h3>
             <div className="grid grid-cols-2 gap-1 text-sm text-gray-300">
-              {departments.slice(0, 10).map((dept) => (
-                  <Link key={dept} to="/departments" className="hover:text-yellow-300">{dept}</Link>
+              {departments.map((dept) => (
+                <Link key={dept.path} to={dept.path} className="hover:text-yellow-300">
+                  {dept.name}
+                </Link>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-lg font-bold mb-4">Important Links</h3>
             <ul className="space-y-2 text-sm text-gray-300">
               {importantLinks.map((link) => (
                 <li key={link.label}>
-                    <a href={link.url} target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300">
+                  <a href={link.url} target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300">
                     {link.label}
                   </a>
                 </li>
@@ -79,7 +92,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Map */}
           <div>
             <h3 className="text-lg font-bold mb-4">Location</h3>
             <iframe
@@ -93,7 +105,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Social & Copyright */}
       <div className="border-t border-red-700">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
