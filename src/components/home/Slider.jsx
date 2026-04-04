@@ -50,20 +50,7 @@ export default function Slider() {
             <p className="text-xs sm:text-sm md:text-base lg:text-xl text-white/90 drop-shadow max-w-2xl hidden sm:block">
               {slide.subtitle}
             </p>
-            <div className="mt-3 sm:mt-4 md:mt-6 flex gap-2 sm:gap-3">
-              <a 
-                href="/admissions" 
-                className="px-3 sm:px-6 md:px-8 py-1.5 sm:py-2 md:py-3 bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm md:text-base font-semibold rounded-lg transition"
-              >
-                Apply Now
-              </a>
-              <a 
-                href="/about" 
-                className="px-3 sm:px-6 md:px-8 py-1.5 sm:py-2 md:py-3 bg-white/20 hover:bg-white/30 text-white text-xs sm:text-sm md:text-base font-semibold rounded-lg transition backdrop-blur"
-              >
-                Learn More
-              </a>
-            </div>
+
           </div>
         </div>
       ))}
