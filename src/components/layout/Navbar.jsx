@@ -1,12 +1,12 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { FaHome, FaBars, FaTimes, FaSearch, FaChevronDown } from "react-icons/fa";
+import { FaHome, FaBars, FaTimes, FaSearch, FaUserCircle, FaChevronDown } from "react-icons/fa";
 
 function Navbar() {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   const [search, setSearch] = useState("");
-  const [showQuickLinks, setShowQuickLinks] = useState(false);
 
   useEffect(() => {
     setMenuOpen(false);
@@ -23,6 +23,12 @@ function Navbar() {
     { label: "Admissions", path: "/admissions" },
     { label: "Notices", path: "/notices" },
     { label: "Contact", path: "/contact" },
+  ];
+
+  const loginOptions = [
+    { label: "SAMARTH Student Login", url: "https://cusb.samarth.edu.in", color: "bg-blue-600" },
+    { label: "SAMARTH Employee Login", url: "https://cusb.samarth.ac.in", color: "bg-green-600" },
+    { label: "Admin Login", url: "/admin", color: "bg-red-600" },
   ];
 
   const allLinks = [
@@ -77,6 +83,43 @@ function Navbar() {
               >
                 Student Portal
               </NavLink>
+
+              <div className="relative">
+                <button
+                  onClick={() => setShowLogin(!showLogin)}
+                  onMouseEnter={() => setShowLogin(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-red-800 font-semibold rounded hover:bg-gray-100 transition"
+                >
+                  <FaUserCircle />
+                  <span className="hidden sm:inline">Login</span>
+                  <FaChevronDown className={`transition-transform ${showLogin ? 'rotate-180' : ''}`} />
+                </button>
+
+                {showLogin && (
+                  <div
+                    className="absolute right-0 mt-2 w-64 bg-white text-gray-800 rounded-lg shadow-xl z-50 overflow-hidden"
+                    onMouseLeave={() => setShowLogin(false)}
+                  >
+                    <div className="p-3 bg-red-800 text-white font-semibold">
+                      Select Login Type
+                    </div>
+                    <div className="py-2">
+                      {loginOptions.map((option, index) => (
+                        <a
+                          key={index}
+                          href={option.url}
+                          target={option.url.startsWith("http") ? "_blank" : "_self"}
+                          rel="noopener noreferrer"
+                          className={`flex items-center gap-3 px-4 py-3 text-white hover:opacity-90 transition ${option.color}`}
+                        >
+                          <FaUserCircle />
+                          <span>{option.label}</span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -115,6 +158,22 @@ function Navbar() {
             <NavLink to="/students" className="block text-center py-3 bg-green-600 text-white font-bold rounded mt-2">
               Student Portal
             </NavLink>
+
+            <div className="border-t border-red-800 pt-3 space-y-2">
+              <p className="font-semibold text-yellow-300">Login Options:</p>
+              {loginOptions.map((option, index) => (
+                <a
+                  key={index}
+                  href={option.url}
+                  target={option.url.startsWith("http") ? "_blank" : "_self"}
+                  rel="noopener noreferrer"
+                  className={`flex items-center gap-2 py-2 px-3 text-white rounded ${option.color}`}
+                >
+                  <FaUserCircle />
+                  <span>{option.label}</span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       )}
