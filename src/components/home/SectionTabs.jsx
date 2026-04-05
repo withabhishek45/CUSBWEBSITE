@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { FaBell, FaCalendar } from "react-icons/fa";
 import { api } from "../../utils/api";
 
 const sections = [
@@ -80,18 +81,28 @@ export default function SectionTabs() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               {items.slice(0, 4).map((item) => (
                 <article key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group">
-                  <div className="h-40 overflow-hidden">
-                    <img
-                      src={item.image || "https://picsum.photos/seed/default/600/400"}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
+                  {item.image ? (
+                    <div className="h-40 overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-40 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                      {active === "notices" ? (
+                        <FaBell className="text-5xl text-white/80" />
+                      ) : (
+                        <FaCalendar className="text-5xl text-white/80" />
+                      )}
+                    </div>
+                  )}
                   <div className="p-4">
                     <h3 className="font-bold text-gray-800 mb-1 line-clamp-2">{item.title}</h3>
-                    <p className="text-sm text-blue-700 mb-2">{item.subtitle || item.content}</p>
+                    <p className="text-sm text-blue-700 mb-2">{item.subtitle || item.description || item.content}</p>
                     <span className="text-xs text-gray-500 flex items-center gap-1">
-                      <span>📅</span> {item.date}
+                      <FaCalendar className="text-xs" /> {item.date}
                     </span>
                   </div>
                 </article>
