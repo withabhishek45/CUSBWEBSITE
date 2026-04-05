@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const UNI_NAME = "Central University of South Bihar";
@@ -13,82 +13,103 @@ const slides = [
 export default function Slider() {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const slideCount = useMemo(() => slides.length, []);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  const minSwipeDistance = 50;
+
+  const goTo = useCallback((index) => {
+    setCurrent((index + slides.length) % slides.length);
+  }, []);
+
+  const nextSlide = useCallback(() => goTo(current + 1), [current, goTo]);
+  const prevSlide = useCallback(() => goTo(current - 1), [current, goTo]);
 
   useEffect(() => {
     if (isPaused) return;
-    const timer = setInterval(() => setCurrent((prev) => (prev + 1) % slideCount), 5000);
+    const timer = setInterval(nextSlide, 5000);
     return () => clearInterval(timer);
-  }, [slideCount, isPaused]);
+  }, [isPaused, nextSlide]);
 
-  const goTo = (index) => setCurrent((index + slideCount) % slideCount);
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
 
-  const nextSlide = () => goTo(current + 1);
-  const prevSlide = () => goTo(current - 1);
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > minSwipeDistance) nextSlide();
+    if (distance < -minSwipeDistance) prevSlide();
+  };
 
   return (
     <section 
-      className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden"
+      className="relative w-full h-[35vh] sm:h-[45vh] md:h-[55vh] lg:h-[65vh] overflow-hidden select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-700 ${index === current ? "opacity-100 z-10" : "opacity-0 z-0"}`}
+          className={`absolute inset-0 transition-opacity duration-500 ${index === current ? "opacity-100 z-10" : "opacity-0 z-0"}`}
         >
           <img 
             src={slide.src} 
             alt={slide.title} 
-            className="w-full h-full object-cover" 
+            className="w-full h-full object-cover object-center"
+            loading={index === 0 ? "eager" : "lazy"}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 sm:px-8 md:px-16 text-white">
-            <h2 className="text-base sm:text-xl md:text-3xl lg:text-5xl font-bold mb-1 sm:mb-3 md:mb-4 drop-shadow-xl leading-tight max-w-4xl">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 sm:px-12 md:px-16 lg:px-24 text-white">
+            <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-5xl font-bold mb-2 sm:mb-3 md:mb-4 drop-shadow-2xl leading-tight max-w-4xl px-2">
               {slide.title}
             </h2>
-            <p className="text-xs sm:text-sm md:text-base lg:text-xl text-white/90 drop-shadow max-w-2xl hidden sm:block">
+            <p className="text-xs sm:text-sm md:text-lg lg:text-xl text-white/90 drop-shadow max-w-2xl px-4">
               {slide.subtitle}
             </p>
-
           </div>
         </div>
       ))}
 
-      {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-gray-900 shadow-lg transition hover:scale-110"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-gray-800 shadow-lg transition-all hover:scale-110 active:scale-95"
         aria-label="Previous slide"
       >
-        <FaChevronLeft className="text-sm sm:text-lg md:text-2xl" />
+        <FaChevronLeft className="text-lg sm:text-xl md:text-2xl" />
       </button>
 
       <button
         onClick={nextSlide}
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-gray-900 shadow-lg transition hover:scale-110"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-gray-800 shadow-lg transition-all hover:scale-110 active:scale-95"
         aria-label="Next slide"
       >
-        <FaChevronRight className="text-sm sm:text-lg md:text-2xl" />
+        <FaChevronRight className="text-lg sm:text-xl md:text-2xl" />
       </button>
 
-      {/* Dots */}
-      <div className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 sm:gap-2">
+      <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {slides.map((_, idx) => (
           <button
             key={idx}
             onClick={() => goTo(idx)}
-            className={`rounded-full transition-all ${idx === current ? "bg-white w-6 sm:w-8 h-2 sm:h-2" : "bg-white/60 w-2 h-2"}`}
+            className={`rounded-full transition-all duration-300 ${idx === current ? "bg-white w-6 sm:w-8 h-2 sm:h-2" : "bg-white/60 w-2 h-2 hover:bg-white/80"}`}
             aria-label={`Go to slide ${idx + 1}`}
           />
         ))}
       </div>
 
-      {/* Progress Bar */}
       <div className="absolute bottom-0 left-0 right-0 z-20 h-1 bg-white/20">
         <div 
-          className="h-full bg-white/80 transition-all duration-300"
-          style={{ width: `${((current + 1) / slideCount) * 100}%` }}
+          className="h-full bg-white/90 transition-all duration-300"
+          style={{ width: `${((current + 1) / slides.length) * 100}%` }}
         />
       </div>
     </section>
