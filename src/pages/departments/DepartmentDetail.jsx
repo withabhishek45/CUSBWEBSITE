@@ -5,7 +5,7 @@ import {
   FaArrowRight, FaFlask as FaLab, FaChartLine, FaLanguage, FaHistory, 
   FaBalanceScale, FaCalculator, FaAtom, FaLeaf, FaDna, FaImages, FaUserGraduate,
   FaFlask as FaScience, FaHandshake, FaCalendar, FaDownload, FaSearch,
-  FaAward, FaFilePdf, FaExternalLinkAlt, FaScroll, FaClock, FaChalkboardTeacher
+  FaAward, FaFilePdf, FaExternalLinkAlt, FaScroll, FaClock, FaChalkboardTeacher, FaLaptop
 } from "react-icons/fa";
 import BackToTop from "../../components/layout/BackToTop";
 import { api } from "../../utils/api";
@@ -15,7 +15,7 @@ const iconMap = {
   "biotechnology": FaDna,
   "chemistry": FaFlask,
   "commerce": FaChartLine,
-  "computer-science": FaLaptop || FaChalkboardTeacher,
+  "computer-science": FaLaptop,
   "economics": FaChartLine,
   "english": FaLanguage,
   "hindi": FaLanguage,
