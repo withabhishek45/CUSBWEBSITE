@@ -7,7 +7,7 @@ const quickActions = [
   { icon: FaBullhorn, title: "Notices", desc: "Latest announcements", path: "/notices", color: "from-orange-500 to-orange-700", bg: "bg-orange-50", text: "text-orange-600" },
   { icon: FaUserGraduate, title: "Students", desc: "Student portal", path: "/students", color: "from-purple-500 to-purple-700", bg: "bg-purple-50", text: "text-purple-600" },
   { icon: FaPhoneAlt, title: "Contact", desc: "Get in touch", path: "/contact", color: "from-teal-500 to-teal-700", bg: "bg-teal-50", text: "text-teal-600" },
-  { icon: FaUniversity, title: "Campus", desc: "Explore facilities", path: "/visitors", color: "from-pink-500 to-pink-700", bg: "bg-pink-50", text: "text-pink-600" },
+  { icon: FaUniversity, title: "About", desc: "Explore CUSB", path: "/about", color: "from-pink-500 to-pink-700", bg: "bg-pink-50", text: "text-pink-600" },
 ];
 
 export default function QuickActions() {

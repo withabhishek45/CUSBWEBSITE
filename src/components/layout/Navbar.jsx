@@ -28,7 +28,7 @@ function Navbar() {
   const loginOptions = [
     { label: "SAMARTH Student Login", url: "https://cusb.samarth.edu.in", color: "bg-blue-600" },
     { label: "SAMARTH Employee Login", url: "https://cusb.samarth.ac.in", color: "bg-green-600" },
-    { label: "Admin Login", url: "/admin", color: "bg-red-600" },
+    { label: "Student Portal", url: "/students", color: "bg-red-600" },
   ];
 
   const allLinks = [
