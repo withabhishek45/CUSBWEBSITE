@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaBell, FaCalendar } from "react-icons/fa";
+import { FaBell, FaCalendar, FaNewspaper } from "react-icons/fa";
 import { api } from "../../utils/api";
 
 const sections = [
   { id: "recent-events", title: "Recent Events", route: "/notices" },
   { id: "upcoming-events", title: "Upcoming Events", route: "/notices" },
   { id: "notices", title: "Notices", route: "/notices" },
+  { id: "newsletter", title: "Newsletter", route: "/notices" },
 ];
 
 export default function SectionTabs() {
@@ -22,7 +23,8 @@ export default function SectionTabs() {
         setData({
           recentEvents: allData.events?.filter(e => e.type === 'recent') || [],
           upcomingEvents: allData.events?.filter(e => e.type === 'upcoming') || [],
-          notices: allData.notices || []
+          notices: allData.notices || [],
+          newsletter: allData.news || []
         });
       }
       setLoading(false);
@@ -35,6 +37,7 @@ export default function SectionTabs() {
       case "recent-events": return data.recentEvents || [];
       case "upcoming-events": return data.upcomingEvents || [];
       case "notices": return data.notices || [];
+      case "newsletter": return data.newsletter || [];
       default: return [];
     }
   };
@@ -93,6 +96,8 @@ export default function SectionTabs() {
                     <div className="h-40 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
                       {active === "notices" ? (
                         <FaBell className="text-5xl text-white/80" />
+                      ) : active === "newsletter" ? (
+                        <FaNewspaper className="text-5xl text-white/80" />
                       ) : (
                         <FaCalendar className="text-5xl text-white/80" />
                       )}
