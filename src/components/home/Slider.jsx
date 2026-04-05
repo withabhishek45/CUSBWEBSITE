@@ -1,10 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { api } from "../../utils/api";
 
 const UNI_NAME = "Central University of South Bihar";
 
-const defaultSlides = [
+const slides = [
   { id: 1, src: "/images/fd27.jpeg", title: "Welcome to " + UNI_NAME, subtitle: "Explore our campuses, programs and innovation" },
   { id: 2, src: "/images/interconf.jpg", title: UNI_NAME, subtitle: "A Legacy of Research Excellence" },
   { id: 3, src: "/images/2.jpg", title: "World Class Education at " + UNI_NAME, subtitle: "Join thousands of students pursuing excellence" },
@@ -12,7 +11,6 @@ const defaultSlides = [
 ];
 
 export default function Slider() {
-  const [slides, setSlides] = useState(defaultSlides);
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
@@ -20,25 +18,9 @@ export default function Slider() {
 
   const minSwipeDistance = 50;
 
-  useEffect(() => {
-    async function fetchSlides() {
-      const allData = await api.getAll();
-      if (allData?.gallery && allData.gallery.length > 0) {
-        const gallerySlides = allData.gallery.map((item, index) => ({
-          id: item.id || index + 1,
-          src: item.image,
-          title: item.title || UNI_NAME,
-          subtitle: item.category || "Central University of South Bihar"
-        }));
-        setSlides(gallerySlides.length > 0 ? gallerySlides : defaultSlides);
-      }
-    }
-    fetchSlides();
-  }, []);
-
   const goTo = useCallback((index) => {
     setCurrent((index + slides.length) % slides.length);
-  }, [slides.length]);
+  }, []);
 
   const nextSlide = useCallback(() => goTo(current + 1), [current, goTo]);
   const prevSlide = useCallback(() => goTo(current - 1), [current, goTo]);
