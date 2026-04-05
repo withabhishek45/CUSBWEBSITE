@@ -6,7 +6,7 @@ const programmes = [
     subtitle: "Bachelor's Degree Programmes",
     desc: "Explore UG programmes in all departments",
     image: "/images/ug.jpg",
-    path: "/undergraduate",
+    path: "/departments",
     color: "from-blue-500 to-blue-700"
   },
   {
@@ -14,7 +14,7 @@ const programmes = [
     subtitle: "Master's Degree Programmes",
     desc: "Explore PG programmes in all departments",
     image: "/images/pg.jpg",
-    path: "/postgraduate",
+    path: "/departments",
     color: "from-green-500 to-green-700"
   },
   {
@@ -22,7 +22,7 @@ const programmes = [
     subtitle: "PhD & Doctoral Programmes",
     desc: "Explore PhD and research areas",
     image: "/images/phd.jpg",
-    path: "/research",
+    path: "/departments",
     color: "from-purple-500 to-purple-700"
   },
 ];
