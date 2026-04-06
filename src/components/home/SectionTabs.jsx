@@ -3,38 +3,33 @@ import { Link } from "react-router-dom";
 import { api } from "../../utils/api";
 
 const sections = [
-  { id: "recent-events", title: "Recent Events", route: "/recent-events" },
-  { id: "upcoming-events", title: "Upcoming Events", route: "/upcoming-events" },
-  { id: "tenders", title: "Tenders", route: "/tenders" },
-  { id: "recruitment", title: "Recruitment", route: "/recruitment" },
-  { id: "updates", title: "Updates", route: "/updates" },
-  { id: "newsletter", title: "Newsletter", route: "/newsletter" },
+  { id: "events", title: "Events", route: "/events" },
+  { id: "news", title: "News", route: "/news" },
+  { id: "notices", title: "Notices", route: "/notices" },
 ];
 
 export default function SectionTabs() {
-  const [active, setActive] = useState("recent-events");
-  const [data, setData] = useState({});
+  const [active, setActive] = useState("events");
+  const [data, setData] = useState({ events: [], news: [], notices: [] });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const [recent, upcoming, tenders, recruitment, updates, newsletters] = await Promise.all([
-        api.get("/events/recent"),
-        api.get("/events/upcoming"),
-        api.get("/tenders"),
-        api.get("/recruitment"),
-        api.get("/updates"),
-        api.get("/newsletters"),
-      ]);
-      setData({
-        recentEvents: recent || [],
-        upcomingEvents: upcoming || [],
-        tenders: tenders || [],
-        recruitment: recruitment || [],
-        updates: updates || [],
-        newsletters: newsletters || []
-      });
+      try {
+        const [events, news, notices] = await Promise.all([
+          api.get("/events"),
+          api.get("/news"),
+          api.get("/notices"),
+        ]);
+        setData({
+          events: events || [],
+          news: news || [],
+          notices: notices || []
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
       setLoading(false);
     }
     fetchData();
@@ -42,12 +37,9 @@ export default function SectionTabs() {
 
   const getItems = () => {
     switch (active) {
-      case "recent-events": return data.recentEvents || [];
-      case "upcoming-events": return data.upcomingEvents || [];
-      case "tenders": return data.tenders || [];
-      case "recruitment": return data.recruitment || [];
-      case "updates": return data.updates || [];
-      case "newsletter": return data.newsletters || [];
+      case "events": return data.events || [];
+      case "news": return data.news || [];
+      case "notices": return data.notices || [];
       default: return [];
     }
   };
@@ -58,13 +50,11 @@ export default function SectionTabs() {
   return (
     <section className="py-10 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
         <div className="flex items-center gap-3 mb-6">
           <span className="h-8 w-1 bg-green-600"></span>
           <h2 className="text-2xl font-bold text-gray-800">Latest Updates</h2>
         </div>
 
-        {/* Tabs */}
         <div className="flex flex-wrap gap-2 mb-6">
           {sections.map((section) => (
             <button
@@ -81,7 +71,6 @@ export default function SectionTabs() {
           ))}
         </div>
 
-        {/* Content */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[1,2,3,4].map(i => (
@@ -95,7 +84,7 @@ export default function SectionTabs() {
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              {items.slice(0, 4).map((item) => (
+              {items.slice(0, 8).map((item) => (
                 <article key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group">
                   <div className="h-40 overflow-hidden">
                     <img
@@ -106,9 +95,9 @@ export default function SectionTabs() {
                   </div>
                   <div className="p-4">
                     <h3 className="font-bold text-gray-800 mb-1 line-clamp-2">{item.title}</h3>
-                    <p className="text-sm text-blue-700 mb-2">{item.subtitle || item.content}</p>
+                    <p className="text-sm text-blue-700 mb-2">{item.subtitle || item.description || item.content}</p>
                     <span className="text-xs text-gray-500 flex items-center gap-1">
-                      <span>📅</span> {item.date}
+                      📅 {item.date}
                     </span>
                   </div>
                 </article>
