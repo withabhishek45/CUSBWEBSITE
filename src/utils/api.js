@@ -1,4 +1,14 @@
-const API_BASE = 'https://cusb-backend-1.onrender.com';
+const API_BASE =
+  (import.meta?.env?.VITE_API_URL || 'https://cusb-backend-1.onrender.com').replace(/\/+$/, '');
+
+function normalizeEndpoint(endpoint) {
+  const e = endpoint?.startsWith('/') ? endpoint : `/${endpoint || ''}`;
+  return e.startsWith('/api/') ? e : `/api${e}`;
+}
+
+function mockKeyFromEndpoint(endpoint) {
+  return normalizeEndpoint(endpoint).replace(/^\/api\//, '').replace(/^\/+/, '');
+}
 
 const MOCK_DATA = {
   departments: [
@@ -26,8 +36,9 @@ const MOCK_DATA = {
 export const api = {
   async get(endpoint) {
     try {
-      console.log(`API Call: ${API_BASE}${endpoint}`);
-      const res = await fetch(`${API_BASE}${endpoint}`, {
+      const normalized = normalizeEndpoint(endpoint);
+      console.log(`API Call: ${API_BASE}${normalized}`);
+      const res = await fetch(`${API_BASE}${normalized}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +47,7 @@ export const api = {
       
       if (!res.ok) {
         console.error(`API Error: HTTP ${res.status}`);
-        return MOCK_DATA[endpoint.replace('/api/', '')] || null;
+        return MOCK_DATA[mockKeyFromEndpoint(endpoint)] || null;
       }
       
       const data = await res.json();
@@ -45,13 +56,14 @@ export const api = {
     } catch (err) {
       console.error(`API Error (${endpoint}):`, err.message);
       console.log('Using mock data as fallback');
-      return MOCK_DATA[endpoint.replace('/api/', '')] || null;
+      return MOCK_DATA[mockKeyFromEndpoint(endpoint)] || null;
     }
   },
 
   async post(endpoint, data) {
     try {
-      const res = await fetch(`${API_BASE}${endpoint}`, {
+      const normalized = normalizeEndpoint(endpoint);
+      const res = await fetch(`${API_BASE}${normalized}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
