@@ -10,21 +10,6 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const departments = [
-  { name: "Agriculture", path: "/departments/agriculture" },
-  { name: "Biotechnology", path: "/departments/biotechnology" },
-  { name: "Chemistry", path: "/departments/chemistry" },
-  { name: "Commerce", path: "/departments/commerce" },
-  { name: "Computer Science", path: "/departments/computer-science" },
-  { name: "Economics", path: "/departments/economics" },
-  { name: "English", path: "/departments/english" },
-  { name: "Hindi", path: "/departments/hindi" },
-  { name: "History", path: "/departments/history" },
-  { name: "Law", path: "/departments/law" },
-  { name: "Mathematics", path: "/departments/mathematics" },
-  { name: "Physics", path: "/departments/physics" },
-];
-
 const importantLinks = [
   { label: "UGC", url: "https://www.ugc.gov.in" },
   { label: "AICTE", url: "https://www.aicte-india.org" },
@@ -37,9 +22,38 @@ const importantLinks = [
 const quickLinks = [
   { label: "Students", path: "/students" },
   { label: "Notices", path: "/notices" },
-  { label: "Examinations", path: "/students" },
-  { label: "Scholarships", path: "/students" },
+  { label: "Examinations", path: "/students#exams" },
+  { label: "Scholarships", path: "/students#scholarships" },
   { label: "Contact", path: "/contact" },
+];
+
+const departments = [
+  { name: "Bioinformatics", path: "/departments/bioinformatics" },
+  { name: "Geology", path: "/departments/geology" },
+  { name: "Geography", path: "/departments/geography" },
+  { name: "Life Sciences", path: "/departments/life-sciences" },
+  { name: "Biotechnology", path: "/departments/biotechnology" },
+  { name: "Environmental Sciences", path: "/departments/environmental-sciences" },
+  { name: "History & Archaeology", path: "/departments/history-archaeology" },
+  { name: "Economics", path: "/departments/economics" },
+  { name: "Political Studies", path: "/departments/political-studies" },
+  { name: "Sociology", path: "/departments/sociology" },
+  { name: "Library & Information Science", path: "/departments/library-science" },
+  { name: "Chemistry", path: "/departments/chemistry" },
+  { name: "Physics", path: "/departments/physics" },
+  { name: "Mathematics", path: "/departments/mathematics" },
+  { name: "Statistics", path: "/departments/statistics" },
+  { name: "Computer Science", path: "/departments/computer-science" },
+  { name: "Teacher Education", path: "/departments/teacher-education" },
+  { name: "Physical Education", path: "/departments/physical-education" },
+  { name: "English", path: "/departments/english" },
+  { name: "Indian Languages", path: "/departments/indian-languages" },
+  { name: "Mass Communication", path: "/departments/mass-communication" },
+  { name: "Commerce", path: "/departments/commerce" },
+  { name: "Psychology", path: "/departments/psychology" },
+  { name: "Law", path: "/departments/law" },
+  { name: "Pharmacy", path: "/departments/pharmacy" },
+  { name: "Agriculture", path: "/departments/agriculture" },
 ];
 
 export default function Footer() {
@@ -58,8 +72,8 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-10">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          <div>
+        <div className="grid gap-8 lg:grid-cols-5">
+          <div className="lg:col-span-1">
             <h3 className="text-lg font-bold mb-4">Central University of South Bihar</h3>
             <div className="space-y-2 text-sm text-gray-300">
               <p className="flex items-center gap-2"><FaMapMarker /> NH-120, Gaya Panchanpur Road, Gaya - 824236 (Bihar)</p>
@@ -69,9 +83,20 @@ export default function Footer() {
           </div>
 
           <div>
+            <h3 className="text-lg font-bold mb-4">Schools</h3>
+            <div className="grid grid-cols-2 gap-1 text-sm text-gray-300">
+              {departments.slice(0, 13).map((dept) => (
+                <Link key={dept.path} to={dept.path} className="hover:text-yellow-300">
+                  {dept.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
             <h3 className="text-lg font-bold mb-4">Departments</h3>
             <div className="grid grid-cols-2 gap-1 text-sm text-gray-300">
-              {departments.map((dept) => (
+              {departments.slice(13).map((dept) => (
                 <Link key={dept.path} to={dept.path} className="hover:text-yellow-300">
                   {dept.name}
                 </Link>
@@ -81,15 +106,13 @@ export default function Footer() {
 
           <div>
             <h3 className="text-lg font-bold mb-4">Important Links</h3>
-            <ul className="space-y-2 text-sm text-gray-300">
+            <div className="space-y-1 text-sm text-gray-300">
               {importantLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.url} target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300">
-                    {link.label}
-                  </a>
-                </li>
+                <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="block hover:text-yellow-300">
+                  {link.label}
+                </a>
               ))}
-            </ul>
+            </div>
           </div>
 
           <div>

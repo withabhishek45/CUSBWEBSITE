@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { FaSearch, FaFileAlt, FaBook, FaUserGraduate, FaBell, FaUniversity, FaArrowRight, FaGraduationCap, FaHome, FaClipboardList, FaMoneyBill } from "react-icons/fa";
 import BackToTop from "../components/layout/BackToTop";
@@ -45,13 +45,7 @@ export default function Search() {
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
-  useEffect(() => {
-    if (query) {
-      performSearch(query);
-    }
-  }, [query]);
-
-  const performSearch = (term) => {
+  const performSearch = useCallback((term) => {
     setLoading(true);
     const termLower = term.toLowerCase().trim();
     
@@ -72,7 +66,13 @@ export default function Search() {
 
     setResults(matched);
     setLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    if (query) {
+      performSearch(query);
+    }
+  }, [query, performSearch]);
 
   const handleSearch = (e) => {
     e.preventDefault();

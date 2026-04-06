@@ -31,7 +31,6 @@ export default function Programmes() {
   return (
     <section className="py-10 bg-gradient-to-br from-yellow-50 to-orange-50">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-2">
             <span className="h-8 w-1 bg-secondary-600"></span>
@@ -40,7 +39,6 @@ export default function Programmes() {
           <p className="text-gray-600">Choose your path to excellence</p>
         </div>
 
-        {/* Programme Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {programmes.map((prog) => (
             <Link key={prog.path} to={prog.path} className="block">

@@ -1,52 +1,83 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { 
   FaArrowLeft, FaGraduationCap, FaUsers, FaBook, FaFlask, FaEnvelope, FaPhone, 
   FaArrowRight, FaFlask as FaLab, FaChartLine, FaLanguage, FaHistory, 
   FaBalanceScale, FaCalculator, FaAtom, FaLeaf, FaDna, FaImages, FaUserGraduate,
   FaFlask as FaScience, FaHandshake, FaCalendar, FaDownload, FaSearch,
-  FaAward, FaFilePdf, FaExternalLinkAlt, FaScroll, FaClock, FaChalkboardTeacher, FaLaptop
+  FaAward, FaFilePdf, FaExternalLinkAlt, FaScroll, FaClock, FaChalkboardTeacher, FaLaptop,
+  FaGlobeAmericas, FaBrain, FaGavel, FaPills, FaDumbbell, FaFilm, FaBuilding, FaBible
 } from "react-icons/fa";
 import BackToTop from "../../components/layout/BackToTop";
 import { api } from "../../utils/api";
 
 const iconMap = {
-  "agriculture": FaLeaf,
+  "bioinformatics": FaGlobeAmericas,
+  "geology": FaGlobeAmericas,
+  "geography": FaGlobeAmericas,
+  "life-sciences": FaLeaf,
   "biotechnology": FaDna,
-  "chemistry": FaFlask,
-  "commerce": FaChartLine,
-  "computer-science": FaLaptop,
+  "environmental-sciences": FaLeaf,
+  "history-archaeology": FaHistory,
   "economics": FaChartLine,
-  "english": FaLanguage,
-  "hindi": FaLanguage,
-  "history": FaHistory,
-  "law": FaBalanceScale,
-  "mathematics": FaCalculator,
+  "political-studies": FaBible,
+  "sociology": FaUsers,
+  "library-science": FaBook,
+  "chemistry": FaFlask,
   "physics": FaAtom,
+  "mathematics": FaCalculator,
+  "statistics": FaCalculator,
+  "computer-science": FaLaptop,
+  "teacher-education": FaChalkboardTeacher,
+  "physical-education": FaDumbbell,
+  "english": FaLanguage,
+  "indian-languages": FaLanguage,
+  "mass-communication": FaFilm,
+  "commerce": FaBuilding,
+  "psychology": FaBrain,
+  "law": FaGavel,
+  "pharmacy": FaPills,
+  "agriculture": FaLeaf,
 };
 
 const colorMap = {
-  "agriculture": "from-emerald-600 to-teal-700",
+  "bioinformatics": "from-teal-600 to-cyan-700",
+  "geology": "from-amber-600 to-orange-700",
+  "geography": "from-green-600 to-emerald-700",
+  "life-sciences": "from-green-500 to-emerald-600",
   "biotechnology": "from-blue-600 to-indigo-700",
+  "environmental-sciences": "from-emerald-600 to-teal-700",
+  "history-archaeology": "from-amber-800 to-yellow-700",
+  "economics": "from-violet-600 to-purple-700",
+  "political-studies": "from-red-600 to-pink-700",
+  "sociology": "from-indigo-600 to-blue-700",
+  "library-science": "from-cyan-600 to-teal-700",
   "chemistry": "from-purple-600 to-pink-700",
-  "commerce": "from-orange-600 to-red-700",
-  "computer-science": "from-cyan-600 to-blue-700",
-  "economics": "from-green-600 to-emerald-700",
-  "english": "from-rose-600 to-pink-700",
-  "hindi": "from-amber-600 to-orange-700",
-  "history": "from-violet-600 to-purple-700",
-  "law": "from-sky-600 to-cyan-700",
-  "mathematics": "from-lime-600 to-green-700",
   "physics": "from-fuchsia-600 to-purple-700",
+  "mathematics": "from-lime-600 to-green-700",
+  "statistics": "from-orange-600 to-red-700",
+  "computer-science": "from-cyan-600 to-blue-700",
+  "teacher-education": "from-blue-600 to-indigo-700",
+  "physical-education": "from-orange-600 to-red-600",
+  "english": "from-rose-600 to-pink-700",
+  "indian-languages": "from-amber-600 to-orange-700",
+  "mass-communication": "from-pink-600 to-purple-700",
+  "commerce": "from-emerald-600 to-teal-700",
+  "psychology": "from-violet-600 to-purple-700",
+  "law": "from-slate-700 to-gray-800",
+  "pharmacy": "from-green-600 to-emerald-700",
+  "agriculture": "from-emerald-600 to-teal-700",
 };
 
 export default function DepartmentDetail() {
   const { id } = useParams();
   const [department, setDepartment] = useState(null);
   const [faculty, setFaculty] = useState([]);
+  const [syllabus, setSyllabus] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedProgram, setSelectedProgram] = useState("");
+  const [selectedSemester, setSelectedSemester] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -54,10 +85,14 @@ export default function DepartmentDetail() {
       const allData = await api.getAll();
       if (allData) {
         const dept = allData.departments?.find(d => d.id === id);
-        const fac = allData.faculty?.filter(f => f.department === id) || [];
+        const syl = allData.syllabus?.filter(s => s.department === id) || [];
         setDepartment(dept);
-        setFaculty(fac);
+        setFaculty(dept?.faculty || []);
+        setSyllabus(syl);
         if (dept?.programs?.[0]) setSelectedProgram(dept.programs[0]);
+        if (syl.length > 0 && syl[0].semesters?.length > 0) {
+          setSelectedSemester(syl[0].semesters[0].sem);
+        }
       }
       setLoading(false);
     }
@@ -101,7 +136,6 @@ export default function DepartmentDetail() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Hero Section */}
       <div className={`bg-gradient-to-r ${colorClass} text-white`}>
         <div className="max-w-7xl mx-auto px-4 py-12">
           <Link to="/departments" className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-6 transition">
@@ -124,7 +158,6 @@ export default function DepartmentDetail() {
         </div>
       </div>
 
-      {/* Image Gallery Slider */}
       {department.images && department.images.length > 0 && (
         <div className="max-w-7xl mx-auto px-4 -mt-6">
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
@@ -133,7 +166,6 @@ export default function DepartmentDetail() {
         </div>
       )}
 
-      {/* Tabs Navigation */}
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="bg-white rounded-xl shadow-md overflow-x-auto">
           <div className="flex min-w-max">
@@ -154,9 +186,7 @@ export default function DepartmentDetail() {
         </div>
       </div>
 
-      {/* Tab Content */}
       <div className="max-w-7xl mx-auto px-4 pb-8">
-        {/* Overview Tab */}
         {activeTab === "overview" && (
           <div className="space-y-6">
             <section className="bg-white rounded-2xl shadow-md p-6">
@@ -213,20 +243,24 @@ export default function DepartmentDetail() {
           </div>
         )}
 
-        {/* Programs & Syllabus Tab */}
         {activeTab === "programs" && (
           <div className="space-y-6">
             <section className="bg-white rounded-2xl shadow-md p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">Programs & Syllabus</h2>
               
-              {/* Program Selection */}
               <div className="mb-6">
                 <label className="block text-gray-700 font-medium mb-2">Select Program:</label>
                 <div className="flex flex-wrap gap-2">
                   {department.programs.map((prog) => (
                     <button
                       key={prog}
-                      onClick={() => setSelectedProgram(prog)}
+                      onClick={() => {
+                        setSelectedProgram(prog);
+                        const syl = syllabus.find(s => s.program === prog);
+                        if (syl?.semesters?.length > 0) {
+                          setSelectedSemester(syl.semesters[0].sem);
+                        }
+                      }}
                       className={`px-4 py-2 rounded-lg font-medium transition ${
                         selectedProgram === prog
                           ? "bg-blue-600 text-white"
@@ -239,37 +273,74 @@ export default function DepartmentDetail() {
                 </div>
               </div>
 
-              {/* Syllabus Download */}
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6">
-                <div className="flex items-center justify-between flex-wrap gap-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">
-                      {selectedProgram} - Syllabus
-                    </h3>
-                    <p className="text-gray-600">Academic Year 2024-25</p>
-                  </div>
-                  <a href="#" className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                    <FaDownload /> Download PDF
-                  </a>
-                </div>
-              </div>
+              {syllabus.length > 0 ? (
+                <>
+                  {syllabus.filter(s => department.programs.includes(s.program)).map((sylProg) => (
+                    <div key={sylProg.program} className={selectedProgram === sylProg.program ? "block" : "hidden"}>
+                      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-6">
+                        <div className="flex items-center justify-between flex-wrap gap-4">
+                          <div>
+                            <h3 className="text-xl font-bold text-gray-800 mb-2">
+                              {sylProg.program} - Syllabus
+                            </h3>
+                            <p className="text-gray-600">Academic Year 2024-25</p>
+                          </div>
+                          <a href="#" className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            <FaDownload /> Download PDF
+                          </a>
+                        </div>
+                      </div>
 
-              {/* Syllabus Structure */}
-              <div className="mt-6 grid md:grid-cols-2 gap-4">
-                {[1, 2, 3, 4].map((sem) => (
-                  <div key={sem} className="bg-gray-50 rounded-xl p-4">
-                    <h4 className="font-bold text-gray-800 mb-3">Semester {sem}</h4>
-                    <ul className="space-y-2 text-gray-600">
-                      <li className="flex items-center gap-2"><FaBook className="text-blue-500" /> Core Course {sem}.1</li>
-                      <li className="flex items-center gap-2"><FaBook className="text-blue-500" /> Elective Course {sem}.2</li>
-                      <li className="flex items-center gap-2"><FaFlask className="text-green-500" /> Practical / Lab</li>
-                    </ul>
-                  </div>
-                ))}
-              </div>
+                      <div className="mb-6">
+                        <label className="block text-gray-700 font-medium mb-3">Select Semester:</label>
+                        <div className="flex flex-wrap gap-2">
+                          {sylProg.semesters?.map((sem) => (
+                            <button
+                              key={sem.sem}
+                              onClick={() => setSelectedSemester(sem.sem)}
+                              className={`px-4 py-2 rounded-lg font-medium transition ${
+                                selectedSemester === sem.sem
+                                  ? "bg-green-600 text-white"
+                                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                              }`}
+                            >
+                              Semester {sem.sem}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="bg-gray-50 rounded-xl p-6">
+                        <h4 className="font-bold text-gray-800 mb-4">Semester {selectedSemester} Subjects</h4>
+                        <div className="grid md:grid-cols-2 gap-4">
+                          {sylProg.semesters?.filter(s => s.sem === selectedSemester).map((sem) => (
+                            <div key={sem.sem} className="bg-white rounded-lg p-4 shadow-sm">
+                              <ul className="space-y-3">
+                                {sem.subjects?.map((subject, idx) => (
+                                  <li key={idx} className="flex items-start gap-3 text-gray-700">
+                                    <span className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm flex-shrink-0 mt-0.5">
+                                      {idx + 1}
+                                    </span>
+                                    <span>{subject}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div className="text-center py-12 bg-gray-50 rounded-xl">
+                  <FaBook className="text-4xl text-gray-300 mx-auto mb-4" />
+                  <p className="text-gray-500">Syllabus information will be available soon.</p>
+                  <p className="text-sm text-gray-400 mt-2">Please contact the department for detailed syllabus.</p>
+                </div>
+              )}
             </section>
 
-            {/* Time Table Section */}
             <section className="bg-white rounded-2xl shadow-md p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
                 <FaCalendar className="text-blue-600" /> Class Time Table
@@ -303,7 +374,6 @@ export default function DepartmentDetail() {
           </div>
         )}
 
-        {/* Faculty Tab */}
         {activeTab === "faculty" && (
           <div className="space-y-6">
             <section className="bg-white rounded-2xl shadow-md p-6">
@@ -314,8 +384,8 @@ export default function DepartmentDetail() {
               {faculty.length > 0 ? (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {faculty.map((f) => (
-                    <div key={f.id} className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition">
-                      <div className="flex items-start gap-4">
+                    <div key={f.id} className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition border border-gray-100">
+                      <div className="flex items-start gap-4 mb-4">
                         <img 
                           src={f.image || "https://via.placeholder.com/100"}
                           alt={f.name}
@@ -327,20 +397,59 @@ export default function DepartmentDetail() {
                           <p className="text-gray-500 text-sm mt-1">{f.specialization}</p>
                         </div>
                       </div>
-                      <div className="mt-4 pt-4 border-t">
-                        <p className="text-sm text-gray-600 mb-2">
-                          <span className="font-medium">Education:</span> {f.education}
-                        </p>
-                        <p className="text-sm text-gray-600 mb-2">
-                          <span className="font-medium">Experience:</span> {f.experience}
-                        </p>
-                        <p className="text-sm text-gray-600 mb-2">
-                          <span className="font-medium">Publications:</span> {f.publications}
-                        </p>
-                        <a href={`mailto:${f.email}`} className="text-blue-600 text-sm hover:underline flex items-center gap-1">
-                          <FaEnvelope /> {f.email}
-                        </a>
+                      
+                      <div className="space-y-2 text-sm">
+                        {f.qualification && (
+                          <p className="text-gray-600">
+                            <span className="font-medium text-gray-700">Qualification:</span> {f.qualification}
+                          </p>
+                        )}
+                        {f.education && (
+                          <p className="text-gray-600">
+                            <span className="font-medium text-gray-700">Education:</span> {f.education}
+                          </p>
+                        )}
+                        {f.experience && (
+                          <p className="text-gray-600">
+                            <span className="font-medium text-gray-700">Experience:</span> {f.experience}
+                          </p>
+                        )}
+                        {f.researchInterests && (
+                          <p className="text-gray-600">
+                            <span className="font-medium text-gray-700">Research:</span> {f.researchInterests}
+                          </p>
+                        )}
                       </div>
+                      
+                      <div className="mt-4 pt-4 border-t space-y-2">
+                        <div className="flex items-center gap-4 text-sm">
+                          <a href={`mailto:${f.email}`} className="text-blue-600 hover:underline flex items-center gap-1">
+                            <FaEnvelope /> {f.email}
+                          </a>
+                          {f.phone && (
+                            <span className="text-gray-500 flex items-center gap-1">
+                              <FaPhone /> {f.phone}
+                            </span>
+                          )}
+                        </div>
+                        {f.publications && (
+                          <p className="text-sm text-gray-600">
+                            <span className="font-medium text-gray-700">Publications:</span> {f.publications}
+                          </p>
+                        )}
+                        {f.awards && (
+                          <p className="text-sm text-gray-600">
+                            <span className="font-medium text-yellow-600">Awards:</span> {f.awards}
+                          </p>
+                        )}
+                      </div>
+                      
+                      <button 
+                        onClick={() => window.open(`mailto:${f.email}?subject=Faculty Inquiry`, '_blank')}
+                        className="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2 font-medium"
+                      >
+                        <FaEnvelope /> View Full Profile
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -351,7 +460,6 @@ export default function DepartmentDetail() {
           </div>
         )}
 
-        {/* Facilities Tab */}
         {activeTab === "facilities" && (
           <div className="space-y-6">
             <section className="bg-white rounded-2xl shadow-md p-6">
@@ -384,7 +492,6 @@ export default function DepartmentDetail() {
           </div>
         )}
 
-        {/* Students Tab */}
         {activeTab === "students" && (
           <div className="space-y-6">
             <section className="bg-white rounded-2xl shadow-md p-6">
@@ -431,7 +538,6 @@ export default function DepartmentDetail() {
           </div>
         )}
 
-        {/* Research Tab */}
         {activeTab === "research" && (
           <div className="space-y-6">
             <section className="bg-white rounded-2xl shadow-md p-6">
@@ -481,7 +587,6 @@ export default function DepartmentDetail() {
           </div>
         )}
 
-        {/* Events Tab */}
         {activeTab === "events" && (
           <div className="space-y-6">
             <section className="bg-white rounded-2xl shadow-md p-6">
@@ -534,7 +639,6 @@ export default function DepartmentDetail() {
         )}
       </div>
 
-      {/* Contact Section */}
       <div className="bg-gradient-to-r from-red-700 to-red-600 text-white">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -556,7 +660,6 @@ export default function DepartmentDetail() {
   );
 }
 
-// Department Image Slider Component
 function DepartmentSlider({ images }) {
   const [current, setCurrent] = useState(0);
 

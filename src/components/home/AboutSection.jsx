@@ -22,13 +22,11 @@ function AboutSection() {
   return (
     <section className="py-6 sm:py-10 md:py-12 bg-gradient-to-br from-green-50 to-teal-50">
       <div className="max-w-7xl mx-auto px-3 sm:px-4">
-        {/* Header */}
         <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
           <span className="h-6 sm:h-8 w-1 bg-green-600 rounded-full"></span>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">{t('about.title')}</h2>
         </div>
 
-        {/* Quick Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
           {stats.map((stat, i) => (
             <div key={i} className="bg-white p-3 sm:p-4 rounded-xl shadow-md text-center">
@@ -39,9 +37,7 @@ function AboutSection() {
           ))}
         </div>
 
-        {/* Content */}
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
-          {/* Text */}
           <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
             <p className="text-sm sm:text-base text-gray-700 mb-3 sm:mb-4 leading-relaxed">
               <strong>Central University of South Bihar, Gaya</strong> is one among 54 central universities of the Federal Government of India. It was established under the <strong>Central Universities Act, 2009</strong>.
@@ -60,7 +56,6 @@ function AboutSection() {
             </Link>
           </div>
 
-          {/* Leadership Cards */}
           <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4">
             {leaders.map((leader) => (
               <div key={leader.path} className="bg-blue-50 p-2 sm:p-3 md:p-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full group hover:-translate-y-1">

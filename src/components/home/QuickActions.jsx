@@ -28,23 +28,16 @@ export default function QuickActions() {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center border border-gray-100 overflow-hidden">
-                {/* Gradient top bar */}
                 <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${action.color}`}></div>
-                
-                {/* Icon */}
                 <div className={`w-16 h-16 sm:w-18 sm:h-18 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${action.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   <action.icon className="text-3xl text-white" />
                 </div>
-                
-                {/* Text */}
                 <h3 className="font-bold text-gray-800 text-base sm:text-lg mb-1 group-hover:text-gray-900 transition-colors">
                   {action.title}
                 </h3>
                 <p className={`text-xs sm:text-sm ${action.text}`}>
                   {action.desc}
                 </p>
-                
-                {/* Hover arrow */}
                 <div className="mt-3 flex justify-center">
                   <span className="text-gray-300 group-hover:text-gray-400 transform group-hover:translate-x-1 transition-all">
                     →
