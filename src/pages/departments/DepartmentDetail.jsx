@@ -21,7 +21,7 @@ export default function DepartmentDetail() {
     async function fetchData() {
       setLoading(true);
       try {
-        const data = await api.get(`/departments/${id}`);
+        const data = await api.get(`/department/${id}`);
         if (data) {
           setDepartment(data);
           const syllabusData = await api.get(`/syllabus?department=${id}`);
