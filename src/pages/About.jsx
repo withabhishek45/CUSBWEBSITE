@@ -14,7 +14,7 @@ const campusFeatures = [
   { icon: FaWifi, title: "Campus WiFi", desc: "High-speed internet across campus" },
   { icon: FaHospital, title: "Health Center", desc: "24/7 medical facility" },
   { icon: FaBus, title: "Transport", desc: "Bus service for students & staff" },
-  { icon: FaPlayground, title: "Sports Complex", desc: "Multi-sport facilities" },
+  { icon: FaAward, title: "Sports Complex", desc: "Multi-sport facilities" },
 ];
 
 const buildings = [
