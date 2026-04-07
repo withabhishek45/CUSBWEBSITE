@@ -1,31 +1,29 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { api } from "../../utils/api";
+import { api, MOCK_EVENTS, MOCK_NOTICES } from "../../utils/api";
 
 const sections = [
   { id: "events", title: "Events", route: "/events" },
-  { id: "news", title: "News", route: "/news" },
   { id: "notices", title: "Notices", route: "/notices" },
 ];
 
 export default function SectionTabs() {
   const [active, setActive] = useState("events");
-  const [data, setData] = useState({ events: [], news: [], notices: [] });
+  const [data, setData] = useState({ events: MOCK_EVENTS, notices: MOCK_NOTICES });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
       try {
-        const [events, news, notices] = await Promise.all([
+        const [events, notices] = await Promise.all([
           api.get("/events"),
-          api.get("/news"),
           api.get("/notices"),
         ]);
+        
         setData({
-          events: events || [],
-          news: news || [],
-          notices: notices || []
+          events: (events && events.length > 0) ? events : MOCK_EVENTS,
+          notices: (notices && notices.length > 0) ? notices : MOCK_NOTICES
         });
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -38,7 +36,6 @@ export default function SectionTabs() {
   const getItems = () => {
     switch (active) {
       case "events": return data.events || [];
-      case "news": return data.news || [];
       case "notices": return data.notices || [];
       default: return [];
     }
@@ -88,14 +85,14 @@ export default function SectionTabs() {
                 <article key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group">
                   <div className="h-40 overflow-hidden">
                     <img
-                      src={item.image || "https://picsum.photos/seed/default/600/400"}
+                      src={item.image || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600"}
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   <div className="p-4">
                     <h3 className="font-bold text-gray-800 mb-1 line-clamp-2">{item.title}</h3>
-                    <p className="text-sm text-blue-700 mb-2">{item.subtitle || item.description || item.content}</p>
+                    <p className="text-sm text-blue-700 mb-2 line-clamp-2">{item.subtitle || item.description || item.content}</p>
                     <span className="text-xs text-gray-500 flex items-center gap-1">
                       📅 {item.date}
                     </span>

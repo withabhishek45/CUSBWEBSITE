@@ -1,15 +1,25 @@
 import { useEffect, useRef, useState } from "react";
 import { api } from "../../utils/api";
 
+const MOCK_ANNOUNCEMENTS = [
+  { id: '1', text: 'Semester Registration Open - Last Date: 30th April 2026' },
+  { id: '2', text: 'Annual Convocation on 15th April 2026' },
+  { id: '3', text: 'Campus Placement Drive - TCS & Infosys' },
+  { id: '4', text: 'Examination Schedule Released - Check Portal' },
+  { id: '5', text: 'Fee Payment Deadline Extended to 15th April' },
+];
+
 export default function Announcements() {
   const scrollRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
-  const [announcements, setAnnouncements] = useState([]);
+  const [announcements, setAnnouncements] = useState(MOCK_ANNOUNCEMENTS);
 
   useEffect(() => {
     async function fetchData() {
       const data = await api.get("/announcements");
-      if (data) setAnnouncements(data);
+      if (data && data.length > 0) {
+        setAnnouncements(data);
+      }
     }
     fetchData();
   }, []);
