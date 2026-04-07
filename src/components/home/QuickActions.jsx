@@ -10,7 +10,7 @@ const quickActions = [
   { icon: FaUniversity, title: "Campus", desc: "Explore campus", path: "/about", color: "from-pink-500 to-pink-700", bg: "bg-pink-50", text: "text-pink-600" },
   { icon: FaCalendar, title: "Events", desc: "Upcoming events", path: "/notices", color: "from-indigo-500 to-indigo-700", bg: "bg-indigo-50", text: "text-indigo-600" },
   { icon: FaHome, title: "Hostel", desc: "Hostel facilities", path: "/students", color: "from-cyan-500 to-cyan-700", bg: "bg-cyan-50", text: "text-cyan-600" },
-  { icon: FaBookReader, title: "Central Library", desc: "Library & resources", path: "/students", color: "from-amber-500 to-amber-700", bg: "bg-amber-50", text: "text-amber-600" },
+  { icon: FaFileAlt, title: "Downloads", desc: "Forms & documents", path: "/downloads", color: "from-yellow-500 to-yellow-700", bg: "bg-yellow-50", text: "text-yellow-600" },
 ];
 
 export default function QuickActions() {

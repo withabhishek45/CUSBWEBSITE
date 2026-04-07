@@ -7,6 +7,7 @@ import AboutSection from "./components/home/AboutSection";
 import Admission from "./pages/Admission";
 import Departments from "./pages/Departments";
 import DepartmentDetail from "./pages/departments/DepartmentDetail";
+import Downloads from "./pages/Downloads";
 import Contact from "./pages/Contact";
 import Students from "./pages/Students";
 import President from "./pages/President";
@@ -26,6 +27,7 @@ function App() {
             <Route path="/admissions" element={<Admission />} />
             <Route path="/departments" element={<Departments />} />
             <Route path="/departments/:id" element={<DepartmentDetail />} />
+            <Route path="/downloads" element={<Downloads />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/students" element={<Students />} />
             <Route path="/president" element={<President />} />
