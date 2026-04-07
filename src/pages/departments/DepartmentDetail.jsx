@@ -22,7 +22,7 @@ export default function DepartmentDetail() {
       setLoading(true);
       try {
         const data = await api.get(`/department/${id}`);
-        if (data) {
+        if (data && !data.error) {
           setDepartment(data);
           const syllabusData = await api.get(`/syllabus?department=${id}`);
           if (syllabusData) {
