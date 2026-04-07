@@ -9,6 +9,7 @@ import Departments from "./pages/Departments";
 import DepartmentDetail from "./pages/departments/DepartmentDetail";
 import CentralLibrary from "./pages/CentralLibrary";
 import Downloads from "./pages/Downloads";
+import Hostel from "./pages/Hostel";
 import Contact from "./pages/Contact";
 import Students from "./pages/Students";
 import President from "./pages/President";
@@ -30,6 +31,7 @@ function App() {
             <Route path="/departments/:id" element={<DepartmentDetail />} />
             <Route path="/central-library" element={<CentralLibrary />} />
             <Route path="/downloads" element={<Downloads />} />
+            <Route path="/hostel" element={<Hostel />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/students" element={<Students />} />
             <Route path="/president" element={<President />} />

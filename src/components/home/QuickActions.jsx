@@ -9,7 +9,7 @@ const quickActions = [
   { icon: FaPhoneAlt, title: "Contact", desc: "Get in touch", path: "/contact", color: "from-teal-500 to-teal-700" },
   { icon: FaUniversity, title: "Campus", desc: "Explore campus", path: "/about", color: "from-pink-500 to-pink-700" },
   { icon: FaCalendar, title: "Events", desc: "Upcoming events", path: "/notices", color: "from-indigo-500 to-indigo-700" },
-  { icon: FaHome, title: "Hostel", desc: "Hostel facilities", path: "/students", color: "from-cyan-500 to-cyan-700" },
+  { icon: FaHome, title: "Hostel", desc: "Hostel facilities", path: "/hostel", color: "from-cyan-500 to-cyan-700" },
   { icon: FaFileAlt, title: "Downloads", desc: "Forms & documents", path: "/downloads", color: "from-yellow-500 to-yellow-700" },
   { icon: FaBookReader, title: "Central Library", desc: "Library & resources", path: "/central-library", color: "from-amber-500 to-amber-700" },
 ];
