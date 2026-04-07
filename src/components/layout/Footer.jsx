@@ -11,17 +11,39 @@ import {
 import { Link } from "react-router-dom";
 
 const departments = [
-  "Agriculture", "Biotechnology", "Chemistry", "Commerce & Business Studies",
-  "Computer Science", "Economics", "English", "Hindi", "History",
-  "Law & Governance", "Mathematics", "Physics", "Political Studies & IR",
-  "Psychology", "Sociology", "Statistics", "Teacher Education",
+  { name: "Bioinformatics", id: "bioinformatics" },
+  { name: "Biotechnology", id: "biotechnology" },
+  { name: "Chemistry", id: "chemistry" },
+  { name: "Commerce & Business", id: "commerce" },
+  { name: "Computer Science", id: "computer-science" },
+  { name: "Earth Sciences", id: "earth-sciences" },
+  { name: "Economics", id: "economics" },
+  { name: "Education", id: "teacher-education" },
+  { name: "English", id: "english" },
+  { name: "Environmental Science", id: "environmental-sciences" },
+  { name: "Geography", id: "geography" },
+  { name: "Geology", id: "geology" },
+  { name: "Hindi & Indian Lang.", id: "indian-languages" },
+  { name: "History & Archaeology", id: "history-archaeology" },
+  { name: "Library & Info. Science", id: "library-science" },
+  { name: "Life Sciences", id: "life-sciences" },
+  { name: "Mass Communication", id: "mass-communication" },
+  { name: "Mathematics", id: "mathematics" },
+  { name: "Physical Education", id: "physical-education" },
+  { name: "Physics", id: "physics" },
+  { name: "Political Studies", id: "political-studies" },
+  { name: "Psychology", id: "psychology" },
+  { name: "Sociology", id: "sociology" },
+  { name: "Statistics", id: "statistics" },
+  { name: "Tourism Management", id: "tourism-management" },
+  { name: "Yoga & Sports", id: "yoga-sports" },
 ];
 
 const importantLinks = [
   { label: "UGC", url: "https://www.ugc.gov.in" },
   { label: "AICTE", url: "https://www.aicte-india.org" },
   { label: "NCTE", url: "https://www.ncte.india.in" },
-  { label: "RTI", url: "#" },
+  { label: "RTI", url: "https://www.cusb.ac.in/rti" },
   { label: "Terms & Conditions", url: "#" },
   { label: "Privacy Policy", url: "#" },
 ];
@@ -29,23 +51,20 @@ const importantLinks = [
 export default function Footer() {
   return (
     <footer className="bg-red-900 text-white">
-      {/* Quick Links Bar */}
       <div className="bg-red-800 py-4">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm">
             <Link to="/students" className="hover:text-yellow-300">Students</Link>
-            <Link to="/faculty-staff" className="hover:text-yellow-300">Faculty & Staff</Link>
-            <Link to="/research" className="hover:text-yellow-300">Research</Link>
-            <Link to="/download" className="hover:text-yellow-300">Downloads</Link>
+            <Link to="/departments" className="hover:text-yellow-300">Departments</Link>
+            <Link to="/admissions" className="hover:text-yellow-300">Admissions</Link>
+            <Link to="/notices" className="hover:text-yellow-300">Notices</Link>
             <Link to="/contact" className="hover:text-yellow-300">Contact</Link>
           </div>
         </div>
       </div>
 
-      {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 py-10">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {/* About */}
           <div>
             <h3 className="text-lg font-bold mb-4">Central University of South Bihar</h3>
             <div className="space-y-2 text-sm text-gray-300">
@@ -55,23 +74,30 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Departments */}
           <div>
             <h3 className="text-lg font-bold mb-4">Departments</h3>
-            <div className="grid grid-cols-2 gap-1 text-sm text-gray-300">
-              {departments.slice(0, 10).map((dept) => (
-                  <Link key={dept} to="/departments" className="hover:text-yellow-300">{dept}</Link>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-gray-300 max-h-48 overflow-y-auto">
+              {departments.map((dept) => (
+                <Link 
+                  key={dept.id} 
+                  to={`/departments/${dept.id}`}
+                  className="hover:text-yellow-300 py-0.5"
+                >
+                  {dept.name}
+                </Link>
               ))}
             </div>
+            <Link to="/departments" className="inline-block mt-2 text-sm text-yellow-300 hover:text-yellow-400">
+              View All Departments →
+            </Link>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-lg font-bold mb-4">Important Links</h3>
             <ul className="space-y-2 text-sm text-gray-300">
               {importantLinks.map((link) => (
                 <li key={link.label}>
-                    <a href={link.url} target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300">
+                  <a href={link.url} target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300">
                     {link.label}
                   </a>
                 </li>
@@ -79,7 +105,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Map */}
           <div>
             <h3 className="text-lg font-bold mb-4">Location</h3>
             <iframe
@@ -93,7 +118,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Social & Copyright */}
       <div className="border-t border-red-700">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
