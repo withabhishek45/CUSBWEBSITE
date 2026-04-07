@@ -3,7 +3,7 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 
 import Home from "./pages/Home";
-import AboutSection from "./components/home/AboutSection";
+import About from "./pages/About";
 import Admission from "./pages/Admission";
 import Departments from "./pages/Departments";
 import DepartmentDetail from "./pages/departments/DepartmentDetail";
@@ -24,7 +24,7 @@ function App() {
         <main className="flex-1 overflow-x-hidden">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutSection />} />
+            <Route path="/about" element={<About />} />
             <Route path="/admissions" element={<Admission />} />
             <Route path="/departments" element={<Departments />} />
             <Route path="/departments/:id" element={<DepartmentDetail />} />
