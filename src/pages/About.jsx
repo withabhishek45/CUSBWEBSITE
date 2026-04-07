@@ -1,4 +1,4 @@
-import { FaUniversity, FaBook, FaUsers, FaLaptop, FaBuilding, FaTree, FaHospital, FaBus, FaWifi, FaPlayground, FaAward } from "react-icons/fa";
+import { FaUniversity, FaBook, FaUsers, FaLaptop, FaBuilding, FaHospital, FaBus, FaWifi, FaAward, FaTree } from "react-icons/fa";
 import BackToTop from "../components/layout/BackToTop";
 
 const stats = [
