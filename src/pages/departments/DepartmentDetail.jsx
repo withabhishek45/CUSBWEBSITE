@@ -15,19 +15,15 @@ export default function DepartmentDetail() {
   const [department, setDepartment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
-  const [syllabus, setSyllabus] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
       try {
         const data = await api.get(`/department/${id}`);
-        if (data && !data.error) {
+        console.log("Department API response:", data);
+        if (data && data.id) {
           setDepartment(data);
-          const syllabusData = await api.get(`/syllabus?department=${id}`);
-          if (syllabusData) {
-            setSyllabus(Array.isArray(syllabusData) ? syllabusData : []);
-          }
         }
       } catch (error) {
         console.error('Error fetching department:', error);
@@ -47,13 +43,12 @@ export default function DepartmentDetail() {
 
   if (!department) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Department Not Found</h2>
-          <Link to="/departments" className="text-red-700 hover:text-red-800 font-medium">
-            ← Back to Departments
-          </Link>
-        </div>
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Department Not Found</h2>
+        <p className="text-gray-600 mb-4">ID: {id}</p>
+        <Link to="/departments" className="px-6 py-2 bg-red-700 text-white rounded-lg hover:bg-red-800">
+          ← Back to Departments
+        </Link>
       </div>
     );
   }
@@ -140,18 +135,6 @@ export default function DepartmentDetail() {
             </section>
 
             <section className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">Objectives</h2>
-              <ul className="space-y-2">
-                {department.objectives?.map((obj, i) => (
-                  <li key={i} className="flex items-start gap-2 text-gray-600">
-                    <span className="text-red-700 mt-1">✓</span>
-                    {obj}
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section className="bg-white rounded-xl shadow-md p-6">
               <h2 className="text-xl font-bold text-gray-800 mb-4">Contact Information</h2>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="flex items-center gap-3">
@@ -185,24 +168,6 @@ export default function DepartmentDetail() {
                 ))}
               </div>
             </section>
-
-            {syllabus.length > 0 ? (
-              <section className="bg-white rounded-xl shadow-md p-6">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">Syllabus</h2>
-                <div className="space-y-4">
-                  {syllabus.map((item) => (
-                    <div key={item.id} className="border border-gray-200 rounded-lg p-4">
-                      <h3 className="font-semibold text-gray-800">{item.program}</h3>
-                      <p className="text-gray-600 text-sm mt-1">{item.semesters?.length || 0} Semesters</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            ) : (
-              <div className="bg-white rounded-xl shadow-md p-6 text-center">
-                <p className="text-gray-500">Syllabus details coming soon</p>
-              </div>
-            )}
           </div>
         )}
 
@@ -250,22 +215,6 @@ export default function DepartmentDetail() {
                 ))}
               </div>
             </section>
-
-            {department.images?.length > 1 && (
-              <section className="bg-white rounded-xl shadow-md p-6">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">Gallery</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {department.images.map((img, i) => (
-                    <img
-                      key={i}
-                      src={img}
-                      alt={`${department.name} - ${i + 1}`}
-                      className="rounded-lg w-full h-48 object-cover"
-                    />
-                  ))}
-                </div>
-              </section>
-            )}
           </div>
         )}
       </main>

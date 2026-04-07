@@ -6,14 +6,17 @@ import BackToTop from "../components/layout/BackToTop";
 export default function Departments() {
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
 
   useEffect(() => {
     async function fetchData() {
+      setLoading(true);
       try {
         const data = await api.get("/departments");
+        console.log("Departments API response:", data);
         if (data && Array.isArray(data)) {
           setDepartments(data);
+        } else if (data && data.departments) {
+          setDepartments(data.departments);
         }
       } catch (error) {
         console.error('Error fetching departments:', error);
@@ -22,11 +25,6 @@ export default function Departments() {
     }
     fetchData();
   }, []);
-
-  const filteredDepts = departments.filter(dept => 
-    dept.name?.toLowerCase().includes(search.toLowerCase()) ||
-    dept.shortName?.toLowerCase().includes(search.toLowerCase())
-  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -37,18 +35,7 @@ export default function Departments() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <input
-          type="text"
-          placeholder="Search departments..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-96 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none"
-        />
-        <p className="text-sm text-gray-600 mt-2">{filteredDepts.length} departments found</p>
-      </div>
-
-      <main className="max-w-7xl mx-auto px-4 pb-12">
+      <main className="max-w-7xl mx-auto px-4 py-6">
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1,2,3,4,5,6].map(i => (
@@ -57,7 +44,7 @@ export default function Departments() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredDepts.map((dept) => (
+            {departments.map((dept) => (
               <div key={dept.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group">
                 <div className="relative h-40 overflow-hidden">
                   <img
@@ -95,11 +82,6 @@ export default function Departments() {
                 </div>
               </div>
             ))}
-          </div>
-        )}
-        {!loading && filteredDepts.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No departments found matching "{search}"</p>
           </div>
         )}
       </main>
