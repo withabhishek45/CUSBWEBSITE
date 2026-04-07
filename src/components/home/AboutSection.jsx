@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const leaders = [
-  { name: "Smt. Droupadi Murmu", role: "Hon'ble President of India", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300", path: "/president" },
-  { name: "Dr. C.P Thakur", role: "Hon'ble Chancellor", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300", path: "/chancellor" },
-  { name: "Prof. K. N. Singh", role: "Vice Chancellor", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300", path: "/vice-chancellor" },
+  { name: "Smt. Droupadi Murmu", role: "Hon'ble President of India", image: "/images/dm.jpg", path: "/president" },
+  { name: "Dr. C.P Thakur", role: "Hon'ble Chancellor", image: "/images/cpthakur-final.jpg", path: "/chancellor" },
+  { name: "Prof. K. N. Singh", role: "Vice Chancellor", image: "/images/VC_sir2.jpg", path: "/vice-chancellor" },
 ];
 
 export default function AboutSection() {
