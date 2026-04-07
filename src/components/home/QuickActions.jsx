@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
-import { FaGraduationCap, FaBook, FaBullhorn, FaUserGraduate, FaPhoneAlt, FaUniversity, FaCalendar, FaFileAlt, FaHome, FaBookReader } from "react-icons/fa";
+import { FaGraduationCap, FaBook, FaBullhorn, FaUserGraduate, FaPhoneAlt, FaUniversity, FaCalendar, FaFileAlt, FaHome, FaBookReader, FaChalkboardTeacher } from "react-icons/fa";
 
 const quickActions = [
-  { icon: FaGraduationCap, title: "Admissions", desc: "Apply for 2026-27", path: "/admissions", color: "from-blue-500 to-blue-700", bg: "bg-blue-50", text: "text-blue-600" },
-  { icon: FaBook, title: "Programs", desc: "UG, PG, PhD Courses", path: "/departments", color: "from-green-500 to-green-700", bg: "bg-green-50", text: "text-green-600" },
-  { icon: FaBullhorn, title: "Notices", desc: "Latest announcements", path: "/notices", color: "from-orange-500 to-orange-700", bg: "bg-orange-50", text: "text-orange-600" },
-  { icon: FaUserGraduate, title: "Students", desc: "Student portal", path: "/students", color: "from-purple-500 to-purple-700", bg: "bg-purple-50", text: "text-purple-600" },
-  { icon: FaPhoneAlt, title: "Contact", desc: "Get in touch", path: "/contact", color: "from-teal-500 to-teal-700", bg: "bg-teal-50", text: "text-teal-600" },
-  { icon: FaUniversity, title: "Campus", desc: "Explore campus", path: "/about", color: "from-pink-500 to-pink-700", bg: "bg-pink-50", text: "text-pink-600" },
-  { icon: FaCalendar, title: "Events", desc: "Upcoming events", path: "/notices", color: "from-indigo-500 to-indigo-700", bg: "bg-indigo-50", text: "text-indigo-600" },
-  { icon: FaHome, title: "Hostel", desc: "Hostel facilities", path: "/students", color: "from-cyan-500 to-cyan-700", bg: "bg-cyan-50", text: "text-cyan-600" },
-  { icon: FaFileAlt, title: "Downloads", desc: "Forms & documents", path: "/downloads", color: "from-yellow-500 to-yellow-700", bg: "bg-yellow-50", text: "text-yellow-600" },
-  { icon: FaBookReader, title: "Central Library", desc: "Library & resources", path: "/central-library", color: "from-amber-500 to-amber-700", bg: "bg-amber-50", text: "text-amber-600" },
+  { icon: FaGraduationCap, title: "Admissions", desc: "Apply for 2026-27", path: "/admissions", color: "from-blue-500 to-blue-700" },
+  { icon: FaBook, title: "Programs", desc: "UG, PG, PhD Courses", path: "/departments", color: "from-green-500 to-green-700" },
+  { icon: FaBullhorn, title: "Notices", desc: "Latest announcements", path: "/notices", color: "from-orange-500 to-orange-700" },
+  { icon: FaUserGraduate, title: "Students", desc: "Student portal", path: "/students", color: "from-purple-500 to-purple-700" },
+  { icon: FaPhoneAlt, title: "Contact", desc: "Get in touch", path: "/contact", color: "from-teal-500 to-teal-700" },
+  { icon: FaUniversity, title: "Campus", desc: "Explore campus", path: "/about", color: "from-pink-500 to-pink-700" },
+  { icon: FaCalendar, title: "Events", desc: "Upcoming events", path: "/notices", color: "from-indigo-500 to-indigo-700" },
+  { icon: FaHome, title: "Hostel", desc: "Hostel facilities", path: "/students", color: "from-cyan-500 to-cyan-700" },
+  { icon: FaFileAlt, title: "Downloads", desc: "Forms & documents", path: "/downloads", color: "from-yellow-500 to-yellow-700" },
+  { icon: FaBookReader, title: "Central Library", desc: "Library & resources", path: "/central-library", color: "from-amber-500 to-amber-700" },
 ];
 
 export default function QuickActions() {
@@ -23,7 +23,7 @@ export default function QuickActions() {
           <p className="text-gray-500">Quick access to important sections</p>
         </div>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
           {quickActions.map((action, index) => (
             <Link
               key={action.path + index}
