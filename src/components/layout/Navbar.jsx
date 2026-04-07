@@ -16,9 +16,10 @@ function Navbar() {
     setShowLogin(false);
   }, [location]);
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    if (e) e.preventDefault();
     if (!search.trim()) return;
-    window.location.href = `/search?q=${search}`;
+    window.location.href = `/search?q=${encodeURIComponent(search)}`;
   };
 
   const quickLinks = [

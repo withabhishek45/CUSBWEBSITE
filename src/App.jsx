@@ -16,6 +16,7 @@ import President from "./pages/President";
 import Chancellor from "./pages/Chancellor";
 import ViceChancellor from "./pages/ViceChancellor";
 import Notices from "./pages/Notices";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path="/chancellor" element={<Chancellor />} />
             <Route path="/vice-chancellor" element={<ViceChancellor />} />
             <Route path="/notices" element={<Notices />} />
+            <Route path="/search" element={<Search />} />
           </Routes>
         </main>
         <Footer />
