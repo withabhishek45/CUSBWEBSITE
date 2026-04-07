@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaGraduationCap, FaBook, FaBullhorn, FaUserGraduate, FaPhoneAlt, FaUniversity, FaCalendar, FaFileAlt, FaHome, FaLibrary } from "react-icons/fa";
+import { FaGraduationCap, FaBook, FaBullhorn, FaUserGraduate, FaPhoneAlt, FaUniversity, FaCalendar, FaFileAlt, FaHome, FaBookReader } from "react-icons/fa";
 
 const quickActions = [
   { icon: FaGraduationCap, title: "Admissions", desc: "Apply for 2026-27", path: "/admissions", color: "from-blue-500 to-blue-700", bg: "bg-blue-50", text: "text-blue-600" },
@@ -10,7 +10,7 @@ const quickActions = [
   { icon: FaUniversity, title: "Campus", desc: "Explore campus", path: "/about", color: "from-pink-500 to-pink-700", bg: "bg-pink-50", text: "text-pink-600" },
   { icon: FaCalendar, title: "Events", desc: "Upcoming events", path: "/notices", color: "from-indigo-500 to-indigo-700", bg: "bg-indigo-50", text: "text-indigo-600" },
   { icon: FaHome, title: "Hostel", desc: "Hostel facilities", path: "/students", color: "from-cyan-500 to-cyan-700", bg: "bg-cyan-50", text: "text-cyan-600" },
-  { icon: FaLibrary, title: "Central Library", desc: "Library & resources", path: "/students", color: "from-amber-500 to-amber-700", bg: "bg-amber-50", text: "text-amber-600" },
+  { icon: FaBookReader, title: "Central Library", desc: "Library & resources", path: "/students", color: "from-amber-500 to-amber-700", bg: "bg-amber-50", text: "text-amber-600" },
 ];
 
 export default function QuickActions() {
