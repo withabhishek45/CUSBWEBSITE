@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaGraduationCap, FaBook, FaBullhorn, FaUserGraduate, FaPhoneAlt, FaUniversity, FaCalendar, FaFileAlt, FaChalkboardTeacher } from "react-icons/fa";
+import { FaGraduationCap, FaBook, FaBullhorn, FaUserGraduate, FaPhoneAlt, FaUniversity, FaCalendar, FaFileAlt, FaHome, FaLibrary } from "react-icons/fa";
 
 const quickActions = [
   { icon: FaGraduationCap, title: "Admissions", desc: "Apply for 2026-27", path: "/admissions", color: "from-blue-500 to-blue-700", bg: "bg-blue-50", text: "text-blue-600" },
@@ -9,8 +9,8 @@ const quickActions = [
   { icon: FaPhoneAlt, title: "Contact", desc: "Get in touch", path: "/contact", color: "from-teal-500 to-teal-700", bg: "bg-teal-50", text: "text-teal-600" },
   { icon: FaUniversity, title: "Campus", desc: "Explore campus", path: "/about", color: "from-pink-500 to-pink-700", bg: "bg-pink-50", text: "text-pink-600" },
   { icon: FaCalendar, title: "Events", desc: "Upcoming events", path: "/notices", color: "from-indigo-500 to-indigo-700", bg: "bg-indigo-50", text: "text-indigo-600" },
-  { icon: FaFileAlt, title: "Downloads", desc: "Forms & documents", path: "/students", color: "from-yellow-500 to-yellow-700", bg: "bg-yellow-50", text: "text-yellow-600" },
-  { icon: FaChalkboardTeacher, title: "Faculty", desc: "Our faculty", path: "/departments", color: "from-red-500 to-red-700", bg: "bg-red-50", text: "text-red-600" },
+  { icon: FaHome, title: "Hostel", desc: "Hostel facilities", path: "/students", color: "from-cyan-500 to-cyan-700", bg: "bg-cyan-50", text: "text-cyan-600" },
+  { icon: FaLibrary, title: "Central Library", desc: "Library & resources", path: "/students", color: "from-amber-500 to-amber-700", bg: "bg-amber-50", text: "text-amber-600" },
 ];
 
 export default function QuickActions() {
