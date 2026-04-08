@@ -1,11 +1,44 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { api } from "../utils/api";
 import BackToTop from "../components/layout/BackToTop";
 
 export default function Departments() {
   const [departments, setDepartments] = useState([]);
+  const [filteredDepts, setFilteredDepts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const typeFilter = searchParams.get("type") || "all";
+
+  const filterTypes = [
+    { id: "all", label: "All Departments" },
+    { id: "ug", label: "Undergraduate (UG)" },
+    { id: "pg", label: "Postgraduate (PG)" },
+    { id: "phd", label: "Ph.D. & Research" },
+  ];
+
+  const titleMap = {
+    all: "Our Departments",
+    ug: "Undergraduate (UG) Programs",
+    pg: "Postgraduate (PG) Programs",
+    phd: "Ph.D. & Research Programs",
+  };
+
+  const filterDepartments = (depts, type) => {
+    if (type === "all") return depts;
+    const typeKeywords = {
+      ug: ["B.Sc", "B.A", "B.Com", "B.Pharm", "B.P.Ed", "B.Ed", "B.Lib", "UG"],
+      pg: ["M.Sc", "M.A", "M.Com", "M.Pharm", "M.P.Ed", "M.Ed", "M.Lib", "MCA", "MBA", "PG"],
+      phd: ["Ph.D", "PhD", "Doctoral", "Research"],
+    };
+    return depts.filter(dept => {
+      const programs = dept.programs || [];
+      const keywords = typeKeywords[type] || [];
+      return programs.some(prog => 
+        keywords.some(kw => prog.toLowerCase().includes(kw.toLowerCase()))
+      );
+    });
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -20,8 +53,10 @@ export default function Departments() {
             return (a.shortName || a.name).localeCompare(b.shortName || b.name);
           });
           setDepartments(sorted);
+          setFilteredDepts(filterDepartments(sorted, typeFilter));
         } else if (data && data.departments) {
           setDepartments(data.departments);
+          setFilteredDepts(filterDepartments(data.departments, typeFilter));
         }
       } catch (error) {
         console.error('Error fetching departments:', error);
@@ -31,25 +66,52 @@ export default function Departments() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setFilteredDepts(filterDepartments(departments, typeFilter));
+  }, [typeFilter, departments]);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-gradient-to-r from-red-700 to-red-600 text-white">
         <div className="max-w-7xl mx-auto px-4 py-10">
-          <h1 className="text-3xl font-bold mb-2">Our Departments</h1>
-          <p className="text-red-100">Explore {departments.length} Academic Departments</p>
+          <h1 className="text-3xl font-bold mb-2">{titleMap[typeFilter]}</h1>
+          <p className="text-red-100">Explore {filteredDepts.length} Academic Departments</p>
         </div>
       </div>
 
       <main className="max-w-7xl mx-auto px-4 py-6">
+        <div className="flex flex-wrap gap-2 mb-6">
+          {filterTypes.map((filter) => (
+            <Link
+              key={filter.id}
+              to={filter.id === "all" ? "/departments" : `/departments?type=${filter.id}`}
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition ${
+                typeFilter === filter.id
+                  ? "bg-red-700 text-white"
+                  : "bg-white text-gray-600 hover:bg-red-50 border border-red-100"
+              }`}
+            >
+              {filter.label}
+            </Link>
+          ))}
+        </div>
+
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1,2,3,4,5,6].map(i => (
               <div key={i} className="h-72 bg-gray-200 rounded-xl animate-pulse" />
             ))}
           </div>
+        ) : filteredDepts.length === 0 ? (
+          <div className="text-center py-12 bg-white rounded-xl shadow">
+            <p className="text-gray-500">No departments found for this program type</p>
+            <Link to="/departments" className="text-red-700 hover:underline mt-2 inline-block">
+              View All Departments
+            </Link>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {departments.map((dept) => (
+            {filteredDepts.map((dept) => (
               <div key={dept.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group">
                 <div className="relative h-40 overflow-hidden">
                   <img
