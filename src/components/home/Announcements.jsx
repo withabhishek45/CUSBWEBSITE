@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { api } from "../../utils/api";
 
 const MOCK_ANNOUNCEMENTS = [
-  { id: '1', text: 'Semester Registration Open - Last Date: 30th April 2026' },
-  { id: '2', text: 'Annual Convocation on 15th April 2026' },
-  { id: '3', text: 'Campus Placement Drive - TCS & Infosys' },
-  { id: '4', text: 'Examination Schedule Released - Check Portal' },
-  { id: '5', text: 'Fee Payment Deadline Extended to 15th April' },
+  { id: '1', title: 'Semester Registration Open', subtitle: 'Last Date: 30th April 2026' },
+  { id: '2', title: 'Annual Convocation', subtitle: '15th April 2026' },
+  { id: '3', title: 'Campus Placement Drive', subtitle: 'TCS & Infosys' },
+  { id: '4', title: 'Examination Schedule Released', subtitle: 'Check Portal' },
+  { id: '5', title: 'Fee Payment Deadline Extended', subtitle: '15th April' },
 ];
 
 export default function Announcements() {
@@ -55,7 +55,8 @@ export default function Announcements() {
             <>
               {[...announcements, ...announcements].map((item, idx) => (
                 <span key={idx} className="flex-shrink-0 text-white text-sm md:text-base whitespace-nowrap cursor-pointer hover:text-yellow-300 font-medium">
-                  {item.text}
+                  {item.title}
+                  {item.subtitle && <span className="text-yellow-200 ml-1">- {item.subtitle}</span>}
                   <span className="mx-4 text-white/50">•</span>
                 </span>
               ))}
