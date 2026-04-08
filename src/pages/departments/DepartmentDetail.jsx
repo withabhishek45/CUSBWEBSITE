@@ -20,7 +20,7 @@ export default function DepartmentDetail() {
     async function fetchData() {
       setLoading(true);
       try {
-        const data = await api.get(`/department/${id}`);
+        const data = await api.get(`/departments/${id}`);
         console.log("Department API response:", data);
         if (data && data.id) {
           setDepartment(data);
