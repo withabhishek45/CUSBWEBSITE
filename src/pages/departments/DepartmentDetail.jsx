@@ -168,6 +168,24 @@ export default function DepartmentDetail() {
                 ))}
               </div>
             </section>
+            <section className="bg-white rounded-xl shadow-md p-6">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">Syllabus</h2>
+              <div className="space-y-4">
+                {department.programs?.map((prog, i) => (
+                  <div key={i} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <span className="font-medium text-gray-800">{prog}</span>
+                    <a 
+                      href={`https://www.cusb.ac.in/images/dept/computer_science/Syllabus/Msc_cs_syllabus.pdf`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-800 transition flex items-center gap-2"
+                    >
+                      📥 Download Syllabus
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         )}
 
