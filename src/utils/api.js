@@ -53,11 +53,20 @@ const MOCK_EVENTS = [
 
 const MOCK_STATS = { students: 4100, staff: 200, courses: 50, projects: 100 };
 
+const MOCK_ANNOUNCEMENTS = [
+  { id: '1', title: 'Semester Registration Open', subtitle: 'Last Date: 30th April 2026' },
+  { id: '2', title: 'Annual Convocation', subtitle: '15th April 2026' },
+  { id: '3', title: 'Campus Placement Drive', subtitle: 'TCS & Infosys' },
+  { id: '4', title: 'Examination Schedule Released', subtitle: 'Check Portal' },
+  { id: '5', title: 'Fee Payment Deadline Extended', subtitle: '15th April' },
+];
+
 function getMockData(endpoint) {
   if (endpoint.includes('departments')) return MOCK_DEPARTMENTS;
   if (endpoint.includes('notices')) return MOCK_NOTICES;
   if (endpoint.includes('events')) return MOCK_EVENTS;
   if (endpoint.includes('stats')) return MOCK_STATS;
+  if (endpoint.includes('announcements')) return MOCK_ANNOUNCEMENTS;
   if (endpoint.includes('department/')) {
     const id = endpoint.split('/department/')[1];
     return MOCK_DEPARTMENTS.find(d => d.id === id) || MOCK_DEPARTMENTS[0];
@@ -97,4 +106,4 @@ export const api = {
   },
 };
 
-export { MOCK_DEPARTMENTS, MOCK_NOTICES, MOCK_EVENTS, MOCK_STATS };
+export { MOCK_DEPARTMENTS, MOCK_NOTICES, MOCK_EVENTS, MOCK_STATS, MOCK_ANNOUNCEMENTS };
