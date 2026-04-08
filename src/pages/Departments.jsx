@@ -14,7 +14,12 @@ export default function Departments() {
         const data = await api.get("/departments");
         console.log("Departments API response:", data);
         if (data && Array.isArray(data)) {
-          setDepartments(data);
+          const sorted = data.sort((a, b) => {
+            if (a.id === 'computer-science') return -1;
+            if (b.id === 'computer-science') return 1;
+            return (a.shortName || a.name).localeCompare(b.shortName || b.name);
+          });
+          setDepartments(sorted);
         } else if (data && data.departments) {
           setDepartments(data.departments);
         }
